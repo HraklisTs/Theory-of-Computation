@@ -1,0 +1,3596 @@
+Terminals unused in grammar
+
+   GT
+   CHAR
+   STR
+   BR
+   EAR
+
+
+State 50 conflicts: 1 shift/reduce
+State 57 conflicts: 11 shift/reduce
+State 59 conflicts: 11 shift/reduce
+State 60 conflicts: 11 shift/reduce
+State 86 conflicts: 11 shift/reduce
+State 87 conflicts: 11 shift/reduce
+State 88 conflicts: 11 shift/reduce
+State 89 conflicts: 11 shift/reduce
+State 90 conflicts: 11 shift/reduce
+State 91 conflicts: 10 shift/reduce
+State 92 conflicts: 11 shift/reduce
+State 93 conflicts: 11 shift/reduce
+State 95 conflicts: 11 shift/reduce
+State 96 conflicts: 11 shift/reduce
+State 97 conflicts: 10 shift/reduce
+State 114 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: decl_list CONST START ASSIGN L_PAR R_PAR COLON type_spec ARROW L_BRAC body R_BRAC
+
+    2 decl_list_statement: CONST case_comma COLON type_spec
+    3                    | CONST ID ASSIGN data_type COLON type_spec
+    4                    | LET case_comma COLON type_spec
+    5                    | LET case_comma ASSIGN expressions COLON type_spec
+    6                    | LET decl_array
+    7                    | func_decl
+
+    8 decl_list: decl_list_statement SEMICOLON
+    9          | decl_list decl_list_statement SEMICOLON
+
+   10 func_decl: CONST ID ASSIGN L_PAR func_param R_PAR COLON type_spec ARROW L_BRAC func_body R_BRAC
+
+   11 func_call: ID L_PAR func_args R_PAR
+
+   12 func_args: %empty
+   13          | func_args ',' case_comma
+   14          | expressions
+
+   15 func_param: %empty
+   16           | param_type
+   17           | func_param ',' param_type
+   18           | expressions
+
+   19 param_type: ID COLON type_spec
+   20           | array COLON type_spec
+   21           | ID ',' param_type
+
+   22 func_body: statement_list
+
+   23 body: statement_list
+
+   24 statement_list: statement SEMICOLON
+   25               | statement_list statement SEMICOLON
+
+   26 statement: func_call
+   27          | ID ASSIGN expressions
+   28          | decl_list_statement
+   29          | oth_statement
+
+   30 oth_statement: if_case
+   31              | while_case
+   32              | ret
+
+   33 data_type: POSINT
+   34          | RL
+   35          | ID
+
+   36 type_spec: INT
+   37          | REAL
+   38          | BOOL
+   39          | STRING
+
+   40 case_comma: ID
+   41           | case_comma ',' ID
+
+   42 decl_array: ID '[' POSINT ']' COLON type_spec SEMICOLON
+
+   43 array: ID '[' POSINT ']'
+
+   44 expressions: exp_type
+   45            | NOT expressions
+   46            | OP_PLUS expressions
+   47            | OP_MIN expressions
+   48            | expressions MOD expressions
+   49            | expressions DIV expressions
+   50            | expressions OP_MUL expressions
+   51            | expressions OP_PLUS expressions
+   52            | expressions OP_MIN expressions
+   53            | expressions LST expressions
+   54            | expressions DIFF expressions
+   55            | expressions EQ expressions
+   56            | expressions '<' expressions
+   57            | expressions OP_OR expressions
+   58            | expressions AND expressions
+   59            | L_PAR expressions R_PAR
+
+   60 exp_type: data_type
+   61         | type_spec
+   62         | TRUE
+   63         | FALSE
+   64         | func_call
+
+   65 ret: RET
+   66    | RET expressions
+
+   67 if_case: IF expressions THEN statement_list FI
+   68        | IF expressions THEN statement_list ELSE statement_list FI
+
+   69 while_case: WHILE expressions LOOP statement_list POOL
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+',' (44) 13 17 21 41
+'<' (60) 56
+'[' (91) 42 43
+']' (93) 42 43
+error (256)
+GT (258)
+L_BRAC (259) 1 10
+R_BRAC (260) 1 10
+AND (261) 58
+STRING (262) 39
+OP_OR (263) 57
+NOT (264) 45
+TRUE (265) 62
+FALSE (266) 63
+IF (267) 67 68
+FI (268) 67 68
+ELSE (269) 68
+WHILE (270) 69
+BOOL (271) 38
+CHAR (272)
+RL (273) 34
+POSINT (274) 33 42 43
+ID (275) 3 10 11 19 21 27 35 40 41 42 43
+STR (276)
+LOOP (277) 69
+POOL (278) 69
+CONST (279) 1 2 3 10
+LET (280) 4 5 6
+BR (281)
+RET (282) 65 66
+START (283) 1
+LST (284) 53
+ASSIGN (285) 1 3 5 10 27
+EQ (286) 55
+OP_PLUS (287) 46 51
+OP_MIN (288) 47 52
+L_PAR (289) 1 10 11 59
+R_PAR (290) 1 10 11 59
+DIV (291) 49
+OP_MUL (292) 50
+SEMICOLON (293) 8 9 24 25 42
+COLON (294) 1 2 3 4 5 10 19 20 42
+MOD (295) 48
+DIFF (296) 54
+EAR (297)
+ARROW (298) 1 10
+INT (299) 36
+REAL (300) 37
+THEN (301) 67 68
+NEG (302)
+EXPREC (303)
+
+
+Nonterminals, with rules where they appear
+
+$accept (53)
+    on left: 0
+program (54)
+    on left: 1, on right: 0
+decl_list_statement (55)
+    on left: 2 3 4 5 6 7, on right: 8 9 28
+decl_list (56)
+    on left: 8 9, on right: 1 9
+func_decl (57)
+    on left: 10, on right: 7
+func_call (58)
+    on left: 11, on right: 26 64
+func_args (59)
+    on left: 12 13 14, on right: 11 13
+func_param (60)
+    on left: 15 16 17 18, on right: 10 17
+param_type (61)
+    on left: 19 20 21, on right: 16 17 21
+func_body (62)
+    on left: 22, on right: 10
+body (63)
+    on left: 23, on right: 1
+statement_list (64)
+    on left: 24 25, on right: 22 23 25 67 68 69
+statement (65)
+    on left: 26 27 28 29, on right: 24 25
+oth_statement (66)
+    on left: 30 31 32, on right: 29
+data_type (67)
+    on left: 33 34 35, on right: 3 60
+type_spec (68)
+    on left: 36 37 38 39, on right: 1 2 3 4 5 10 19 20 42 61
+case_comma (69)
+    on left: 40 41, on right: 2 4 5 13 41
+decl_array (70)
+    on left: 42, on right: 6
+array (71)
+    on left: 43, on right: 20
+expressions (72)
+    on left: 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59, on right:
+    5 14 18 27 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 66 67 68
+    69
+exp_type (73)
+    on left: 60 61 62 63 64, on right: 44
+ret (74)
+    on left: 65 66, on right: 32
+if_case (75)
+    on left: 67 68, on right: 30
+while_case (76)
+    on left: 69, on right: 31
+
+
+State 0
+
+    0 $accept: . program $end
+    1 program: . decl_list CONST START ASSIGN L_PAR R_PAR COLON type_spec ARROW L_BRAC body R_BRAC
+    2 decl_list_statement: . CONST case_comma COLON type_spec
+    3                    | . CONST ID ASSIGN data_type COLON type_spec
+    4                    | . LET case_comma COLON type_spec
+    5                    | . LET case_comma ASSIGN expressions COLON type_spec
+    6                    | . LET decl_array
+    7                    | . func_decl
+    8 decl_list: . decl_list_statement SEMICOLON
+    9          | . decl_list decl_list_statement SEMICOLON
+   10 func_decl: . CONST ID ASSIGN L_PAR func_param R_PAR COLON type_spec ARROW L_BRAC func_body R_BRAC
+
+    CONST  shift, and go to state 1
+    LET    shift, and go to state 2
+
+    program              go to state 3
+    decl_list_statement  go to state 4
+    decl_list            go to state 5
+    func_decl            go to state 6
+
+
+State 1
+
+    2 decl_list_statement: CONST . case_comma COLON type_spec
+    3                    | CONST . ID ASSIGN data_type COLON type_spec
+   10 func_decl: CONST . ID ASSIGN L_PAR func_param R_PAR COLON type_spec ARROW L_BRAC func_body R_BRAC
+   40 case_comma: . ID
+   41           | . case_comma ',' ID
+
+    ID  shift, and go to state 7
+
+    case_comma  go to state 8
+
+
+State 2
+
+    4 decl_list_statement: LET . case_comma COLON type_spec
+    5                    | LET . case_comma ASSIGN expressions COLON type_spec
+    6                    | LET . decl_array
+   40 case_comma: . ID
+   41           | . case_comma ',' ID
+   42 decl_array: . ID '[' POSINT ']' COLON type_spec SEMICOLON
+
+    ID  shift, and go to state 9
+
+    case_comma  go to state 10
+    decl_array  go to state 11
+
+
+State 3
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 12
+
+
+State 4
+
+    8 decl_list: decl_list_statement . SEMICOLON
+
+    SEMICOLON  shift, and go to state 13
+
+
+State 5
+
+    1 program: decl_list . CONST START ASSIGN L_PAR R_PAR COLON type_spec ARROW L_BRAC body R_BRAC
+    2 decl_list_statement: . CONST case_comma COLON type_spec
+    3                    | . CONST ID ASSIGN data_type COLON type_spec
+    4                    | . LET case_comma COLON type_spec
+    5                    | . LET case_comma ASSIGN expressions COLON type_spec
+    6                    | . LET decl_array
+    7                    | . func_decl
+    9 decl_list: decl_list . decl_list_statement SEMICOLON
+   10 func_decl: . CONST ID ASSIGN L_PAR func_param R_PAR COLON type_spec ARROW L_BRAC func_body R_BRAC
+
+    CONST  shift, and go to state 14
+    LET    shift, and go to state 2
+
+    decl_list_statement  go to state 15
+    func_decl            go to state 6
+
+
+State 6
+
+    7 decl_list_statement: func_decl .
+
+    $default  reduce using rule 7 (decl_list_statement)
+
+
+State 7
+
+    3 decl_list_statement: CONST ID . ASSIGN data_type COLON type_spec
+   10 func_decl: CONST ID . ASSIGN L_PAR func_param R_PAR COLON type_spec ARROW L_BRAC func_body R_BRAC
+   40 case_comma: ID .  [COLON, ',']
+
+    ASSIGN  shift, and go to state 16
+
+    $default  reduce using rule 40 (case_comma)
+
+
+State 8
+
+    2 decl_list_statement: CONST case_comma . COLON type_spec
+   41 case_comma: case_comma . ',' ID
+
+    COLON  shift, and go to state 17
+    ','    shift, and go to state 18
+
+
+State 9
+
+   40 case_comma: ID .  [ASSIGN, COLON, ',']
+   42 decl_array: ID . '[' POSINT ']' COLON type_spec SEMICOLON
+
+    '['  shift, and go to state 19
+
+    $default  reduce using rule 40 (case_comma)
+
+
+State 10
+
+    4 decl_list_statement: LET case_comma . COLON type_spec
+    5                    | LET case_comma . ASSIGN expressions COLON type_spec
+   41 case_comma: case_comma . ',' ID
+
+    ASSIGN  shift, and go to state 20
+    COLON   shift, and go to state 21
+    ','     shift, and go to state 18
+
+
+State 11
+
+    6 decl_list_statement: LET decl_array .
+
+    $default  reduce using rule 6 (decl_list_statement)
+
+
+State 12
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+State 13
+
+    8 decl_list: decl_list_statement SEMICOLON .
+
+    $default  reduce using rule 8 (decl_list)
+
+
+State 14
+
+    1 program: decl_list CONST . START ASSIGN L_PAR R_PAR COLON type_spec ARROW L_BRAC body R_BRAC
+    2 decl_list_statement: CONST . case_comma COLON type_spec
+    3                    | CONST . ID ASSIGN data_type COLON type_spec
+   10 func_decl: CONST . ID ASSIGN L_PAR func_param R_PAR COLON type_spec ARROW L_BRAC func_body R_BRAC
+   40 case_comma: . ID
+   41           | . case_comma ',' ID
+
+    ID     shift, and go to state 7
+    START  shift, and go to state 22
+
+    case_comma  go to state 8
+
+
+State 15
+
+    9 decl_list: decl_list decl_list_statement . SEMICOLON
+
+    SEMICOLON  shift, and go to state 23
+
+
+State 16
+
+    3 decl_list_statement: CONST ID ASSIGN . data_type COLON type_spec
+   10 func_decl: CONST ID ASSIGN . L_PAR func_param R_PAR COLON type_spec ARROW L_BRAC func_body R_BRAC
+   33 data_type: . POSINT
+   34          | . RL
+   35          | . ID
+
+    RL      shift, and go to state 24
+    POSINT  shift, and go to state 25
+    ID      shift, and go to state 26
+    L_PAR   shift, and go to state 27
+
+    data_type  go to state 28
+
+
+State 17
+
+    2 decl_list_statement: CONST case_comma COLON . type_spec
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+
+    STRING  shift, and go to state 29
+    BOOL    shift, and go to state 30
+    INT     shift, and go to state 31
+    REAL    shift, and go to state 32
+
+    type_spec  go to state 33
+
+
+State 18
+
+   41 case_comma: case_comma ',' . ID
+
+    ID  shift, and go to state 34
+
+
+State 19
+
+   42 decl_array: ID '[' . POSINT ']' COLON type_spec SEMICOLON
+
+    POSINT  shift, and go to state 35
+
+
+State 20
+
+    5 decl_list_statement: LET case_comma ASSIGN . expressions COLON type_spec
+   11 func_call: . ID L_PAR func_args R_PAR
+   33 data_type: . POSINT
+   34          | . RL
+   35          | . ID
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+   44 expressions: . exp_type
+   45            | . NOT expressions
+   46            | . OP_PLUS expressions
+   47            | . OP_MIN expressions
+   48            | . expressions MOD expressions
+   49            | . expressions DIV expressions
+   50            | . expressions OP_MUL expressions
+   51            | . expressions OP_PLUS expressions
+   52            | . expressions OP_MIN expressions
+   53            | . expressions LST expressions
+   54            | . expressions DIFF expressions
+   55            | . expressions EQ expressions
+   56            | . expressions '<' expressions
+   57            | . expressions OP_OR expressions
+   58            | . expressions AND expressions
+   59            | . L_PAR expressions R_PAR
+   60 exp_type: . data_type
+   61         | . type_spec
+   62         | . TRUE
+   63         | . FALSE
+   64         | . func_call
+
+    STRING   shift, and go to state 29
+    NOT      shift, and go to state 36
+    TRUE     shift, and go to state 37
+    FALSE    shift, and go to state 38
+    BOOL     shift, and go to state 30
+    RL       shift, and go to state 24
+    POSINT   shift, and go to state 25
+    ID       shift, and go to state 39
+    OP_PLUS  shift, and go to state 40
+    OP_MIN   shift, and go to state 41
+    L_PAR    shift, and go to state 42
+    INT      shift, and go to state 31
+    REAL     shift, and go to state 32
+
+    func_call    go to state 43
+    data_type    go to state 44
+    type_spec    go to state 45
+    expressions  go to state 46
+    exp_type     go to state 47
+
+
+State 21
+
+    4 decl_list_statement: LET case_comma COLON . type_spec
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+
+    STRING  shift, and go to state 29
+    BOOL    shift, and go to state 30
+    INT     shift, and go to state 31
+    REAL    shift, and go to state 32
+
+    type_spec  go to state 48
+
+
+State 22
+
+    1 program: decl_list CONST START . ASSIGN L_PAR R_PAR COLON type_spec ARROW L_BRAC body R_BRAC
+
+    ASSIGN  shift, and go to state 49
+
+
+State 23
+
+    9 decl_list: decl_list decl_list_statement SEMICOLON .
+
+    $default  reduce using rule 9 (decl_list)
+
+
+State 24
+
+   34 data_type: RL .
+
+    $default  reduce using rule 34 (data_type)
+
+
+State 25
+
+   33 data_type: POSINT .
+
+    $default  reduce using rule 33 (data_type)
+
+
+State 26
+
+   35 data_type: ID .
+
+    $default  reduce using rule 35 (data_type)
+
+
+State 27
+
+   10 func_decl: CONST ID ASSIGN L_PAR . func_param R_PAR COLON type_spec ARROW L_BRAC func_body R_BRAC
+   11 func_call: . ID L_PAR func_args R_PAR
+   15 func_param: . %empty  [R_PAR, ',']
+   16           | . param_type
+   17           | . func_param ',' param_type
+   18           | . expressions
+   19 param_type: . ID COLON type_spec
+   20           | . array COLON type_spec
+   21           | . ID ',' param_type
+   33 data_type: . POSINT
+   34          | . RL
+   35          | . ID
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+   43 array: . ID '[' POSINT ']'
+   44 expressions: . exp_type
+   45            | . NOT expressions
+   46            | . OP_PLUS expressions
+   47            | . OP_MIN expressions
+   48            | . expressions MOD expressions
+   49            | . expressions DIV expressions
+   50            | . expressions OP_MUL expressions
+   51            | . expressions OP_PLUS expressions
+   52            | . expressions OP_MIN expressions
+   53            | . expressions LST expressions
+   54            | . expressions DIFF expressions
+   55            | . expressions EQ expressions
+   56            | . expressions '<' expressions
+   57            | . expressions OP_OR expressions
+   58            | . expressions AND expressions
+   59            | . L_PAR expressions R_PAR
+   60 exp_type: . data_type
+   61         | . type_spec
+   62         | . TRUE
+   63         | . FALSE
+   64         | . func_call
+
+    STRING   shift, and go to state 29
+    NOT      shift, and go to state 36
+    TRUE     shift, and go to state 37
+    FALSE    shift, and go to state 38
+    BOOL     shift, and go to state 30
+    RL       shift, and go to state 24
+    POSINT   shift, and go to state 25
+    ID       shift, and go to state 50
+    OP_PLUS  shift, and go to state 40
+    OP_MIN   shift, and go to state 41
+    L_PAR    shift, and go to state 42
+    INT      shift, and go to state 31
+    REAL     shift, and go to state 32
+
+    $default  reduce using rule 15 (func_param)
+
+    func_call    go to state 43
+    func_param   go to state 51
+    param_type   go to state 52
+    data_type    go to state 44
+    type_spec    go to state 45
+    array        go to state 53
+    expressions  go to state 54
+    exp_type     go to state 47
+
+
+State 28
+
+    3 decl_list_statement: CONST ID ASSIGN data_type . COLON type_spec
+
+    COLON  shift, and go to state 55
+
+
+State 29
+
+   39 type_spec: STRING .
+
+    $default  reduce using rule 39 (type_spec)
+
+
+State 30
+
+   38 type_spec: BOOL .
+
+    $default  reduce using rule 38 (type_spec)
+
+
+State 31
+
+   36 type_spec: INT .
+
+    $default  reduce using rule 36 (type_spec)
+
+
+State 32
+
+   37 type_spec: REAL .
+
+    $default  reduce using rule 37 (type_spec)
+
+
+State 33
+
+    2 decl_list_statement: CONST case_comma COLON type_spec .
+
+    $default  reduce using rule 2 (decl_list_statement)
+
+
+State 34
+
+   41 case_comma: case_comma ',' ID .
+
+    $default  reduce using rule 41 (case_comma)
+
+
+State 35
+
+   42 decl_array: ID '[' POSINT . ']' COLON type_spec SEMICOLON
+
+    ']'  shift, and go to state 56
+
+
+State 36
+
+   11 func_call: . ID L_PAR func_args R_PAR
+   33 data_type: . POSINT
+   34          | . RL
+   35          | . ID
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+   44 expressions: . exp_type
+   45            | . NOT expressions
+   45            | NOT . expressions
+   46            | . OP_PLUS expressions
+   47            | . OP_MIN expressions
+   48            | . expressions MOD expressions
+   49            | . expressions DIV expressions
+   50            | . expressions OP_MUL expressions
+   51            | . expressions OP_PLUS expressions
+   52            | . expressions OP_MIN expressions
+   53            | . expressions LST expressions
+   54            | . expressions DIFF expressions
+   55            | . expressions EQ expressions
+   56            | . expressions '<' expressions
+   57            | . expressions OP_OR expressions
+   58            | . expressions AND expressions
+   59            | . L_PAR expressions R_PAR
+   60 exp_type: . data_type
+   61         | . type_spec
+   62         | . TRUE
+   63         | . FALSE
+   64         | . func_call
+
+    STRING   shift, and go to state 29
+    NOT      shift, and go to state 36
+    TRUE     shift, and go to state 37
+    FALSE    shift, and go to state 38
+    BOOL     shift, and go to state 30
+    RL       shift, and go to state 24
+    POSINT   shift, and go to state 25
+    ID       shift, and go to state 39
+    OP_PLUS  shift, and go to state 40
+    OP_MIN   shift, and go to state 41
+    L_PAR    shift, and go to state 42
+    INT      shift, and go to state 31
+    REAL     shift, and go to state 32
+
+    func_call    go to state 43
+    data_type    go to state 44
+    type_spec    go to state 45
+    expressions  go to state 57
+    exp_type     go to state 47
+
+
+State 37
+
+   62 exp_type: TRUE .
+
+    $default  reduce using rule 62 (exp_type)
+
+
+State 38
+
+   63 exp_type: FALSE .
+
+    $default  reduce using rule 63 (exp_type)
+
+
+State 39
+
+   11 func_call: ID . L_PAR func_args R_PAR
+   35 data_type: ID .  [AND, OP_OR, LOOP, LST, EQ, OP_PLUS, OP_MIN, R_PAR, DIV, OP_MUL, SEMICOLON, COLON, MOD, DIFF, THEN, '<', ',']
+
+    L_PAR  shift, and go to state 58
+
+    $default  reduce using rule 35 (data_type)
+
+
+State 40
+
+   11 func_call: . ID L_PAR func_args R_PAR
+   33 data_type: . POSINT
+   34          | . RL
+   35          | . ID
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+   44 expressions: . exp_type
+   45            | . NOT expressions
+   46            | . OP_PLUS expressions
+   46            | OP_PLUS . expressions
+   47            | . OP_MIN expressions
+   48            | . expressions MOD expressions
+   49            | . expressions DIV expressions
+   50            | . expressions OP_MUL expressions
+   51            | . expressions OP_PLUS expressions
+   52            | . expressions OP_MIN expressions
+   53            | . expressions LST expressions
+   54            | . expressions DIFF expressions
+   55            | . expressions EQ expressions
+   56            | . expressions '<' expressions
+   57            | . expressions OP_OR expressions
+   58            | . expressions AND expressions
+   59            | . L_PAR expressions R_PAR
+   60 exp_type: . data_type
+   61         | . type_spec
+   62         | . TRUE
+   63         | . FALSE
+   64         | . func_call
+
+    STRING   shift, and go to state 29
+    NOT      shift, and go to state 36
+    TRUE     shift, and go to state 37
+    FALSE    shift, and go to state 38
+    BOOL     shift, and go to state 30
+    RL       shift, and go to state 24
+    POSINT   shift, and go to state 25
+    ID       shift, and go to state 39
+    OP_PLUS  shift, and go to state 40
+    OP_MIN   shift, and go to state 41
+    L_PAR    shift, and go to state 42
+    INT      shift, and go to state 31
+    REAL     shift, and go to state 32
+
+    func_call    go to state 43
+    data_type    go to state 44
+    type_spec    go to state 45
+    expressions  go to state 59
+    exp_type     go to state 47
+
+
+State 41
+
+   11 func_call: . ID L_PAR func_args R_PAR
+   33 data_type: . POSINT
+   34          | . RL
+   35          | . ID
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+   44 expressions: . exp_type
+   45            | . NOT expressions
+   46            | . OP_PLUS expressions
+   47            | . OP_MIN expressions
+   47            | OP_MIN . expressions
+   48            | . expressions MOD expressions
+   49            | . expressions DIV expressions
+   50            | . expressions OP_MUL expressions
+   51            | . expressions OP_PLUS expressions
+   52            | . expressions OP_MIN expressions
+   53            | . expressions LST expressions
+   54            | . expressions DIFF expressions
+   55            | . expressions EQ expressions
+   56            | . expressions '<' expressions
+   57            | . expressions OP_OR expressions
+   58            | . expressions AND expressions
+   59            | . L_PAR expressions R_PAR
+   60 exp_type: . data_type
+   61         | . type_spec
+   62         | . TRUE
+   63         | . FALSE
+   64         | . func_call
+
+    STRING   shift, and go to state 29
+    NOT      shift, and go to state 36
+    TRUE     shift, and go to state 37
+    FALSE    shift, and go to state 38
+    BOOL     shift, and go to state 30
+    RL       shift, and go to state 24
+    POSINT   shift, and go to state 25
+    ID       shift, and go to state 39
+    OP_PLUS  shift, and go to state 40
+    OP_MIN   shift, and go to state 41
+    L_PAR    shift, and go to state 42
+    INT      shift, and go to state 31
+    REAL     shift, and go to state 32
+
+    func_call    go to state 43
+    data_type    go to state 44
+    type_spec    go to state 45
+    expressions  go to state 60
+    exp_type     go to state 47
+
+
+State 42
+
+   11 func_call: . ID L_PAR func_args R_PAR
+   33 data_type: . POSINT
+   34          | . RL
+   35          | . ID
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+   44 expressions: . exp_type
+   45            | . NOT expressions
+   46            | . OP_PLUS expressions
+   47            | . OP_MIN expressions
+   48            | . expressions MOD expressions
+   49            | . expressions DIV expressions
+   50            | . expressions OP_MUL expressions
+   51            | . expressions OP_PLUS expressions
+   52            | . expressions OP_MIN expressions
+   53            | . expressions LST expressions
+   54            | . expressions DIFF expressions
+   55            | . expressions EQ expressions
+   56            | . expressions '<' expressions
+   57            | . expressions OP_OR expressions
+   58            | . expressions AND expressions
+   59            | . L_PAR expressions R_PAR
+   59            | L_PAR . expressions R_PAR
+   60 exp_type: . data_type
+   61         | . type_spec
+   62         | . TRUE
+   63         | . FALSE
+   64         | . func_call
+
+    STRING   shift, and go to state 29
+    NOT      shift, and go to state 36
+    TRUE     shift, and go to state 37
+    FALSE    shift, and go to state 38
+    BOOL     shift, and go to state 30
+    RL       shift, and go to state 24
+    POSINT   shift, and go to state 25
+    ID       shift, and go to state 39
+    OP_PLUS  shift, and go to state 40
+    OP_MIN   shift, and go to state 41
+    L_PAR    shift, and go to state 42
+    INT      shift, and go to state 31
+    REAL     shift, and go to state 32
+
+    func_call    go to state 43
+    data_type    go to state 44
+    type_spec    go to state 45
+    expressions  go to state 61
+    exp_type     go to state 47
+
+
+State 43
+
+   64 exp_type: func_call .
+
+    $default  reduce using rule 64 (exp_type)
+
+
+State 44
+
+   60 exp_type: data_type .
+
+    $default  reduce using rule 60 (exp_type)
+
+
+State 45
+
+   61 exp_type: type_spec .
+
+    $default  reduce using rule 61 (exp_type)
+
+
+State 46
+
+    5 decl_list_statement: LET case_comma ASSIGN expressions . COLON type_spec
+   48 expressions: expressions . MOD expressions
+   49            | expressions . DIV expressions
+   50            | expressions . OP_MUL expressions
+   51            | expressions . OP_PLUS expressions
+   52            | expressions . OP_MIN expressions
+   53            | expressions . LST expressions
+   54            | expressions . DIFF expressions
+   55            | expressions . EQ expressions
+   56            | expressions . '<' expressions
+   57            | expressions . OP_OR expressions
+   58            | expressions . AND expressions
+
+    AND      shift, and go to state 62
+    OP_OR    shift, and go to state 63
+    LST      shift, and go to state 64
+    EQ       shift, and go to state 65
+    OP_PLUS  shift, and go to state 66
+    OP_MIN   shift, and go to state 67
+    DIV      shift, and go to state 68
+    OP_MUL   shift, and go to state 69
+    COLON    shift, and go to state 70
+    MOD      shift, and go to state 71
+    DIFF     shift, and go to state 72
+    '<'      shift, and go to state 73
+
+
+State 47
+
+   44 expressions: exp_type .
+
+    $default  reduce using rule 44 (expressions)
+
+
+State 48
+
+    4 decl_list_statement: LET case_comma COLON type_spec .
+
+    $default  reduce using rule 4 (decl_list_statement)
+
+
+State 49
+
+    1 program: decl_list CONST START ASSIGN . L_PAR R_PAR COLON type_spec ARROW L_BRAC body R_BRAC
+
+    L_PAR  shift, and go to state 74
+
+
+State 50
+
+   11 func_call: ID . L_PAR func_args R_PAR
+   19 param_type: ID . COLON type_spec
+   21           | ID . ',' param_type
+   35 data_type: ID .  [AND, OP_OR, LST, EQ, OP_PLUS, OP_MIN, R_PAR, DIV, OP_MUL, MOD, DIFF, '<', ',']
+   43 array: ID . '[' POSINT ']'
+
+    L_PAR  shift, and go to state 58
+    COLON  shift, and go to state 75
+    '['    shift, and go to state 76
+    ','    shift, and go to state 77
+
+    ','       [reduce using rule 35 (data_type)]
+    $default  reduce using rule 35 (data_type)
+
+
+State 51
+
+   10 func_decl: CONST ID ASSIGN L_PAR func_param . R_PAR COLON type_spec ARROW L_BRAC func_body R_BRAC
+   17 func_param: func_param . ',' param_type
+
+    R_PAR  shift, and go to state 78
+    ','    shift, and go to state 79
+
+
+State 52
+
+   16 func_param: param_type .
+
+    $default  reduce using rule 16 (func_param)
+
+
+State 53
+
+   20 param_type: array . COLON type_spec
+
+    COLON  shift, and go to state 80
+
+
+State 54
+
+   18 func_param: expressions .  [R_PAR, ',']
+   48 expressions: expressions . MOD expressions
+   49            | expressions . DIV expressions
+   50            | expressions . OP_MUL expressions
+   51            | expressions . OP_PLUS expressions
+   52            | expressions . OP_MIN expressions
+   53            | expressions . LST expressions
+   54            | expressions . DIFF expressions
+   55            | expressions . EQ expressions
+   56            | expressions . '<' expressions
+   57            | expressions . OP_OR expressions
+   58            | expressions . AND expressions
+
+    AND      shift, and go to state 62
+    OP_OR    shift, and go to state 63
+    LST      shift, and go to state 64
+    EQ       shift, and go to state 65
+    OP_PLUS  shift, and go to state 66
+    OP_MIN   shift, and go to state 67
+    DIV      shift, and go to state 68
+    OP_MUL   shift, and go to state 69
+    MOD      shift, and go to state 71
+    DIFF     shift, and go to state 72
+    '<'      shift, and go to state 73
+
+    $default  reduce using rule 18 (func_param)
+
+
+State 55
+
+    3 decl_list_statement: CONST ID ASSIGN data_type COLON . type_spec
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+
+    STRING  shift, and go to state 29
+    BOOL    shift, and go to state 30
+    INT     shift, and go to state 31
+    REAL    shift, and go to state 32
+
+    type_spec  go to state 81
+
+
+State 56
+
+   42 decl_array: ID '[' POSINT ']' . COLON type_spec SEMICOLON
+
+    COLON  shift, and go to state 82
+
+
+State 57
+
+   45 expressions: NOT expressions .  [AND, OP_OR, LOOP, LST, EQ, OP_PLUS, OP_MIN, R_PAR, DIV, OP_MUL, SEMICOLON, COLON, MOD, DIFF, THEN, '<', ',']
+   48            | expressions . MOD expressions
+   49            | expressions . DIV expressions
+   50            | expressions . OP_MUL expressions
+   51            | expressions . OP_PLUS expressions
+   52            | expressions . OP_MIN expressions
+   53            | expressions . LST expressions
+   54            | expressions . DIFF expressions
+   55            | expressions . EQ expressions
+   56            | expressions . '<' expressions
+   57            | expressions . OP_OR expressions
+   58            | expressions . AND expressions
+
+    AND      shift, and go to state 62
+    OP_OR    shift, and go to state 63
+    LST      shift, and go to state 64
+    EQ       shift, and go to state 65
+    OP_PLUS  shift, and go to state 66
+    OP_MIN   shift, and go to state 67
+    DIV      shift, and go to state 68
+    OP_MUL   shift, and go to state 69
+    MOD      shift, and go to state 71
+    DIFF     shift, and go to state 72
+    '<'      shift, and go to state 73
+
+    AND       [reduce using rule 45 (expressions)]
+    OP_OR     [reduce using rule 45 (expressions)]
+    LST       [reduce using rule 45 (expressions)]
+    EQ        [reduce using rule 45 (expressions)]
+    OP_PLUS   [reduce using rule 45 (expressions)]
+    OP_MIN    [reduce using rule 45 (expressions)]
+    DIV       [reduce using rule 45 (expressions)]
+    OP_MUL    [reduce using rule 45 (expressions)]
+    MOD       [reduce using rule 45 (expressions)]
+    DIFF      [reduce using rule 45 (expressions)]
+    '<'       [reduce using rule 45 (expressions)]
+    $default  reduce using rule 45 (expressions)
+
+
+State 58
+
+   11 func_call: . ID L_PAR func_args R_PAR
+   11          | ID L_PAR . func_args R_PAR
+   12 func_args: . %empty  [R_PAR, ',']
+   13          | . func_args ',' case_comma
+   14          | . expressions
+   33 data_type: . POSINT
+   34          | . RL
+   35          | . ID
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+   44 expressions: . exp_type
+   45            | . NOT expressions
+   46            | . OP_PLUS expressions
+   47            | . OP_MIN expressions
+   48            | . expressions MOD expressions
+   49            | . expressions DIV expressions
+   50            | . expressions OP_MUL expressions
+   51            | . expressions OP_PLUS expressions
+   52            | . expressions OP_MIN expressions
+   53            | . expressions LST expressions
+   54            | . expressions DIFF expressions
+   55            | . expressions EQ expressions
+   56            | . expressions '<' expressions
+   57            | . expressions OP_OR expressions
+   58            | . expressions AND expressions
+   59            | . L_PAR expressions R_PAR
+   60 exp_type: . data_type
+   61         | . type_spec
+   62         | . TRUE
+   63         | . FALSE
+   64         | . func_call
+
+    STRING   shift, and go to state 29
+    NOT      shift, and go to state 36
+    TRUE     shift, and go to state 37
+    FALSE    shift, and go to state 38
+    BOOL     shift, and go to state 30
+    RL       shift, and go to state 24
+    POSINT   shift, and go to state 25
+    ID       shift, and go to state 39
+    OP_PLUS  shift, and go to state 40
+    OP_MIN   shift, and go to state 41
+    L_PAR    shift, and go to state 42
+    INT      shift, and go to state 31
+    REAL     shift, and go to state 32
+
+    $default  reduce using rule 12 (func_args)
+
+    func_call    go to state 43
+    func_args    go to state 83
+    data_type    go to state 44
+    type_spec    go to state 45
+    expressions  go to state 84
+    exp_type     go to state 47
+
+
+State 59
+
+   46 expressions: OP_PLUS expressions .  [AND, OP_OR, LOOP, LST, EQ, OP_PLUS, OP_MIN, R_PAR, DIV, OP_MUL, SEMICOLON, COLON, MOD, DIFF, THEN, '<', ',']
+   48            | expressions . MOD expressions
+   49            | expressions . DIV expressions
+   50            | expressions . OP_MUL expressions
+   51            | expressions . OP_PLUS expressions
+   52            | expressions . OP_MIN expressions
+   53            | expressions . LST expressions
+   54            | expressions . DIFF expressions
+   55            | expressions . EQ expressions
+   56            | expressions . '<' expressions
+   57            | expressions . OP_OR expressions
+   58            | expressions . AND expressions
+
+    AND      shift, and go to state 62
+    OP_OR    shift, and go to state 63
+    LST      shift, and go to state 64
+    EQ       shift, and go to state 65
+    OP_PLUS  shift, and go to state 66
+    OP_MIN   shift, and go to state 67
+    DIV      shift, and go to state 68
+    OP_MUL   shift, and go to state 69
+    MOD      shift, and go to state 71
+    DIFF     shift, and go to state 72
+    '<'      shift, and go to state 73
+
+    AND       [reduce using rule 46 (expressions)]
+    OP_OR     [reduce using rule 46 (expressions)]
+    LST       [reduce using rule 46 (expressions)]
+    EQ        [reduce using rule 46 (expressions)]
+    OP_PLUS   [reduce using rule 46 (expressions)]
+    OP_MIN    [reduce using rule 46 (expressions)]
+    DIV       [reduce using rule 46 (expressions)]
+    OP_MUL    [reduce using rule 46 (expressions)]
+    MOD       [reduce using rule 46 (expressions)]
+    DIFF      [reduce using rule 46 (expressions)]
+    '<'       [reduce using rule 46 (expressions)]
+    $default  reduce using rule 46 (expressions)
+
+
+State 60
+
+   47 expressions: OP_MIN expressions .  [AND, OP_OR, LOOP, LST, EQ, OP_PLUS, OP_MIN, R_PAR, DIV, OP_MUL, SEMICOLON, COLON, MOD, DIFF, THEN, '<', ',']
+   48            | expressions . MOD expressions
+   49            | expressions . DIV expressions
+   50            | expressions . OP_MUL expressions
+   51            | expressions . OP_PLUS expressions
+   52            | expressions . OP_MIN expressions
+   53            | expressions . LST expressions
+   54            | expressions . DIFF expressions
+   55            | expressions . EQ expressions
+   56            | expressions . '<' expressions
+   57            | expressions . OP_OR expressions
+   58            | expressions . AND expressions
+
+    AND      shift, and go to state 62
+    OP_OR    shift, and go to state 63
+    LST      shift, and go to state 64
+    EQ       shift, and go to state 65
+    OP_PLUS  shift, and go to state 66
+    OP_MIN   shift, and go to state 67
+    DIV      shift, and go to state 68
+    OP_MUL   shift, and go to state 69
+    MOD      shift, and go to state 71
+    DIFF     shift, and go to state 72
+    '<'      shift, and go to state 73
+
+    AND       [reduce using rule 47 (expressions)]
+    OP_OR     [reduce using rule 47 (expressions)]
+    LST       [reduce using rule 47 (expressions)]
+    EQ        [reduce using rule 47 (expressions)]
+    OP_PLUS   [reduce using rule 47 (expressions)]
+    OP_MIN    [reduce using rule 47 (expressions)]
+    DIV       [reduce using rule 47 (expressions)]
+    OP_MUL    [reduce using rule 47 (expressions)]
+    MOD       [reduce using rule 47 (expressions)]
+    DIFF      [reduce using rule 47 (expressions)]
+    '<'       [reduce using rule 47 (expressions)]
+    $default  reduce using rule 47 (expressions)
+
+
+State 61
+
+   48 expressions: expressions . MOD expressions
+   49            | expressions . DIV expressions
+   50            | expressions . OP_MUL expressions
+   51            | expressions . OP_PLUS expressions
+   52            | expressions . OP_MIN expressions
+   53            | expressions . LST expressions
+   54            | expressions . DIFF expressions
+   55            | expressions . EQ expressions
+   56            | expressions . '<' expressions
+   57            | expressions . OP_OR expressions
+   58            | expressions . AND expressions
+   59            | L_PAR expressions . R_PAR
+
+    AND      shift, and go to state 62
+    OP_OR    shift, and go to state 63
+    LST      shift, and go to state 64
+    EQ       shift, and go to state 65
+    OP_PLUS  shift, and go to state 66
+    OP_MIN   shift, and go to state 67
+    R_PAR    shift, and go to state 85
+    DIV      shift, and go to state 68
+    OP_MUL   shift, and go to state 69
+    MOD      shift, and go to state 71
+    DIFF     shift, and go to state 72
+    '<'      shift, and go to state 73
+
+
+State 62
+
+   11 func_call: . ID L_PAR func_args R_PAR
+   33 data_type: . POSINT
+   34          | . RL
+   35          | . ID
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+   44 expressions: . exp_type
+   45            | . NOT expressions
+   46            | . OP_PLUS expressions
+   47            | . OP_MIN expressions
+   48            | . expressions MOD expressions
+   49            | . expressions DIV expressions
+   50            | . expressions OP_MUL expressions
+   51            | . expressions OP_PLUS expressions
+   52            | . expressions OP_MIN expressions
+   53            | . expressions LST expressions
+   54            | . expressions DIFF expressions
+   55            | . expressions EQ expressions
+   56            | . expressions '<' expressions
+   57            | . expressions OP_OR expressions
+   58            | . expressions AND expressions
+   58            | expressions AND . expressions
+   59            | . L_PAR expressions R_PAR
+   60 exp_type: . data_type
+   61         | . type_spec
+   62         | . TRUE
+   63         | . FALSE
+   64         | . func_call
+
+    STRING   shift, and go to state 29
+    NOT      shift, and go to state 36
+    TRUE     shift, and go to state 37
+    FALSE    shift, and go to state 38
+    BOOL     shift, and go to state 30
+    RL       shift, and go to state 24
+    POSINT   shift, and go to state 25
+    ID       shift, and go to state 39
+    OP_PLUS  shift, and go to state 40
+    OP_MIN   shift, and go to state 41
+    L_PAR    shift, and go to state 42
+    INT      shift, and go to state 31
+    REAL     shift, and go to state 32
+
+    func_call    go to state 43
+    data_type    go to state 44
+    type_spec    go to state 45
+    expressions  go to state 86
+    exp_type     go to state 47
+
+
+State 63
+
+   11 func_call: . ID L_PAR func_args R_PAR
+   33 data_type: . POSINT
+   34          | . RL
+   35          | . ID
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+   44 expressions: . exp_type
+   45            | . NOT expressions
+   46            | . OP_PLUS expressions
+   47            | . OP_MIN expressions
+   48            | . expressions MOD expressions
+   49            | . expressions DIV expressions
+   50            | . expressions OP_MUL expressions
+   51            | . expressions OP_PLUS expressions
+   52            | . expressions OP_MIN expressions
+   53            | . expressions LST expressions
+   54            | . expressions DIFF expressions
+   55            | . expressions EQ expressions
+   56            | . expressions '<' expressions
+   57            | . expressions OP_OR expressions
+   57            | expressions OP_OR . expressions
+   58            | . expressions AND expressions
+   59            | . L_PAR expressions R_PAR
+   60 exp_type: . data_type
+   61         | . type_spec
+   62         | . TRUE
+   63         | . FALSE
+   64         | . func_call
+
+    STRING   shift, and go to state 29
+    NOT      shift, and go to state 36
+    TRUE     shift, and go to state 37
+    FALSE    shift, and go to state 38
+    BOOL     shift, and go to state 30
+    RL       shift, and go to state 24
+    POSINT   shift, and go to state 25
+    ID       shift, and go to state 39
+    OP_PLUS  shift, and go to state 40
+    OP_MIN   shift, and go to state 41
+    L_PAR    shift, and go to state 42
+    INT      shift, and go to state 31
+    REAL     shift, and go to state 32
+
+    func_call    go to state 43
+    data_type    go to state 44
+    type_spec    go to state 45
+    expressions  go to state 87
+    exp_type     go to state 47
+
+
+State 64
+
+   11 func_call: . ID L_PAR func_args R_PAR
+   33 data_type: . POSINT
+   34          | . RL
+   35          | . ID
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+   44 expressions: . exp_type
+   45            | . NOT expressions
+   46            | . OP_PLUS expressions
+   47            | . OP_MIN expressions
+   48            | . expressions MOD expressions
+   49            | . expressions DIV expressions
+   50            | . expressions OP_MUL expressions
+   51            | . expressions OP_PLUS expressions
+   52            | . expressions OP_MIN expressions
+   53            | . expressions LST expressions
+   53            | expressions LST . expressions
+   54            | . expressions DIFF expressions
+   55            | . expressions EQ expressions
+   56            | . expressions '<' expressions
+   57            | . expressions OP_OR expressions
+   58            | . expressions AND expressions
+   59            | . L_PAR expressions R_PAR
+   60 exp_type: . data_type
+   61         | . type_spec
+   62         | . TRUE
+   63         | . FALSE
+   64         | . func_call
+
+    STRING   shift, and go to state 29
+    NOT      shift, and go to state 36
+    TRUE     shift, and go to state 37
+    FALSE    shift, and go to state 38
+    BOOL     shift, and go to state 30
+    RL       shift, and go to state 24
+    POSINT   shift, and go to state 25
+    ID       shift, and go to state 39
+    OP_PLUS  shift, and go to state 40
+    OP_MIN   shift, and go to state 41
+    L_PAR    shift, and go to state 42
+    INT      shift, and go to state 31
+    REAL     shift, and go to state 32
+
+    func_call    go to state 43
+    data_type    go to state 44
+    type_spec    go to state 45
+    expressions  go to state 88
+    exp_type     go to state 47
+
+
+State 65
+
+   11 func_call: . ID L_PAR func_args R_PAR
+   33 data_type: . POSINT
+   34          | . RL
+   35          | . ID
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+   44 expressions: . exp_type
+   45            | . NOT expressions
+   46            | . OP_PLUS expressions
+   47            | . OP_MIN expressions
+   48            | . expressions MOD expressions
+   49            | . expressions DIV expressions
+   50            | . expressions OP_MUL expressions
+   51            | . expressions OP_PLUS expressions
+   52            | . expressions OP_MIN expressions
+   53            | . expressions LST expressions
+   54            | . expressions DIFF expressions
+   55            | . expressions EQ expressions
+   55            | expressions EQ . expressions
+   56            | . expressions '<' expressions
+   57            | . expressions OP_OR expressions
+   58            | . expressions AND expressions
+   59            | . L_PAR expressions R_PAR
+   60 exp_type: . data_type
+   61         | . type_spec
+   62         | . TRUE
+   63         | . FALSE
+   64         | . func_call
+
+    STRING   shift, and go to state 29
+    NOT      shift, and go to state 36
+    TRUE     shift, and go to state 37
+    FALSE    shift, and go to state 38
+    BOOL     shift, and go to state 30
+    RL       shift, and go to state 24
+    POSINT   shift, and go to state 25
+    ID       shift, and go to state 39
+    OP_PLUS  shift, and go to state 40
+    OP_MIN   shift, and go to state 41
+    L_PAR    shift, and go to state 42
+    INT      shift, and go to state 31
+    REAL     shift, and go to state 32
+
+    func_call    go to state 43
+    data_type    go to state 44
+    type_spec    go to state 45
+    expressions  go to state 89
+    exp_type     go to state 47
+
+
+State 66
+
+   11 func_call: . ID L_PAR func_args R_PAR
+   33 data_type: . POSINT
+   34          | . RL
+   35          | . ID
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+   44 expressions: . exp_type
+   45            | . NOT expressions
+   46            | . OP_PLUS expressions
+   47            | . OP_MIN expressions
+   48            | . expressions MOD expressions
+   49            | . expressions DIV expressions
+   50            | . expressions OP_MUL expressions
+   51            | . expressions OP_PLUS expressions
+   51            | expressions OP_PLUS . expressions
+   52            | . expressions OP_MIN expressions
+   53            | . expressions LST expressions
+   54            | . expressions DIFF expressions
+   55            | . expressions EQ expressions
+   56            | . expressions '<' expressions
+   57            | . expressions OP_OR expressions
+   58            | . expressions AND expressions
+   59            | . L_PAR expressions R_PAR
+   60 exp_type: . data_type
+   61         | . type_spec
+   62         | . TRUE
+   63         | . FALSE
+   64         | . func_call
+
+    STRING   shift, and go to state 29
+    NOT      shift, and go to state 36
+    TRUE     shift, and go to state 37
+    FALSE    shift, and go to state 38
+    BOOL     shift, and go to state 30
+    RL       shift, and go to state 24
+    POSINT   shift, and go to state 25
+    ID       shift, and go to state 39
+    OP_PLUS  shift, and go to state 40
+    OP_MIN   shift, and go to state 41
+    L_PAR    shift, and go to state 42
+    INT      shift, and go to state 31
+    REAL     shift, and go to state 32
+
+    func_call    go to state 43
+    data_type    go to state 44
+    type_spec    go to state 45
+    expressions  go to state 90
+    exp_type     go to state 47
+
+
+State 67
+
+   11 func_call: . ID L_PAR func_args R_PAR
+   33 data_type: . POSINT
+   34          | . RL
+   35          | . ID
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+   44 expressions: . exp_type
+   45            | . NOT expressions
+   46            | . OP_PLUS expressions
+   47            | . OP_MIN expressions
+   48            | . expressions MOD expressions
+   49            | . expressions DIV expressions
+   50            | . expressions OP_MUL expressions
+   51            | . expressions OP_PLUS expressions
+   52            | . expressions OP_MIN expressions
+   52            | expressions OP_MIN . expressions
+   53            | . expressions LST expressions
+   54            | . expressions DIFF expressions
+   55            | . expressions EQ expressions
+   56            | . expressions '<' expressions
+   57            | . expressions OP_OR expressions
+   58            | . expressions AND expressions
+   59            | . L_PAR expressions R_PAR
+   60 exp_type: . data_type
+   61         | . type_spec
+   62         | . TRUE
+   63         | . FALSE
+   64         | . func_call
+
+    STRING   shift, and go to state 29
+    NOT      shift, and go to state 36
+    TRUE     shift, and go to state 37
+    FALSE    shift, and go to state 38
+    BOOL     shift, and go to state 30
+    RL       shift, and go to state 24
+    POSINT   shift, and go to state 25
+    ID       shift, and go to state 39
+    OP_PLUS  shift, and go to state 40
+    OP_MIN   shift, and go to state 41
+    L_PAR    shift, and go to state 42
+    INT      shift, and go to state 31
+    REAL     shift, and go to state 32
+
+    func_call    go to state 43
+    data_type    go to state 44
+    type_spec    go to state 45
+    expressions  go to state 91
+    exp_type     go to state 47
+
+
+State 68
+
+   11 func_call: . ID L_PAR func_args R_PAR
+   33 data_type: . POSINT
+   34          | . RL
+   35          | . ID
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+   44 expressions: . exp_type
+   45            | . NOT expressions
+   46            | . OP_PLUS expressions
+   47            | . OP_MIN expressions
+   48            | . expressions MOD expressions
+   49            | . expressions DIV expressions
+   49            | expressions DIV . expressions
+   50            | . expressions OP_MUL expressions
+   51            | . expressions OP_PLUS expressions
+   52            | . expressions OP_MIN expressions
+   53            | . expressions LST expressions
+   54            | . expressions DIFF expressions
+   55            | . expressions EQ expressions
+   56            | . expressions '<' expressions
+   57            | . expressions OP_OR expressions
+   58            | . expressions AND expressions
+   59            | . L_PAR expressions R_PAR
+   60 exp_type: . data_type
+   61         | . type_spec
+   62         | . TRUE
+   63         | . FALSE
+   64         | . func_call
+
+    STRING   shift, and go to state 29
+    NOT      shift, and go to state 36
+    TRUE     shift, and go to state 37
+    FALSE    shift, and go to state 38
+    BOOL     shift, and go to state 30
+    RL       shift, and go to state 24
+    POSINT   shift, and go to state 25
+    ID       shift, and go to state 39
+    OP_PLUS  shift, and go to state 40
+    OP_MIN   shift, and go to state 41
+    L_PAR    shift, and go to state 42
+    INT      shift, and go to state 31
+    REAL     shift, and go to state 32
+
+    func_call    go to state 43
+    data_type    go to state 44
+    type_spec    go to state 45
+    expressions  go to state 92
+    exp_type     go to state 47
+
+
+State 69
+
+   11 func_call: . ID L_PAR func_args R_PAR
+   33 data_type: . POSINT
+   34          | . RL
+   35          | . ID
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+   44 expressions: . exp_type
+   45            | . NOT expressions
+   46            | . OP_PLUS expressions
+   47            | . OP_MIN expressions
+   48            | . expressions MOD expressions
+   49            | . expressions DIV expressions
+   50            | . expressions OP_MUL expressions
+   50            | expressions OP_MUL . expressions
+   51            | . expressions OP_PLUS expressions
+   52            | . expressions OP_MIN expressions
+   53            | . expressions LST expressions
+   54            | . expressions DIFF expressions
+   55            | . expressions EQ expressions
+   56            | . expressions '<' expressions
+   57            | . expressions OP_OR expressions
+   58            | . expressions AND expressions
+   59            | . L_PAR expressions R_PAR
+   60 exp_type: . data_type
+   61         | . type_spec
+   62         | . TRUE
+   63         | . FALSE
+   64         | . func_call
+
+    STRING   shift, and go to state 29
+    NOT      shift, and go to state 36
+    TRUE     shift, and go to state 37
+    FALSE    shift, and go to state 38
+    BOOL     shift, and go to state 30
+    RL       shift, and go to state 24
+    POSINT   shift, and go to state 25
+    ID       shift, and go to state 39
+    OP_PLUS  shift, and go to state 40
+    OP_MIN   shift, and go to state 41
+    L_PAR    shift, and go to state 42
+    INT      shift, and go to state 31
+    REAL     shift, and go to state 32
+
+    func_call    go to state 43
+    data_type    go to state 44
+    type_spec    go to state 45
+    expressions  go to state 93
+    exp_type     go to state 47
+
+
+State 70
+
+    5 decl_list_statement: LET case_comma ASSIGN expressions COLON . type_spec
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+
+    STRING  shift, and go to state 29
+    BOOL    shift, and go to state 30
+    INT     shift, and go to state 31
+    REAL    shift, and go to state 32
+
+    type_spec  go to state 94
+
+
+State 71
+
+   11 func_call: . ID L_PAR func_args R_PAR
+   33 data_type: . POSINT
+   34          | . RL
+   35          | . ID
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+   44 expressions: . exp_type
+   45            | . NOT expressions
+   46            | . OP_PLUS expressions
+   47            | . OP_MIN expressions
+   48            | . expressions MOD expressions
+   48            | expressions MOD . expressions
+   49            | . expressions DIV expressions
+   50            | . expressions OP_MUL expressions
+   51            | . expressions OP_PLUS expressions
+   52            | . expressions OP_MIN expressions
+   53            | . expressions LST expressions
+   54            | . expressions DIFF expressions
+   55            | . expressions EQ expressions
+   56            | . expressions '<' expressions
+   57            | . expressions OP_OR expressions
+   58            | . expressions AND expressions
+   59            | . L_PAR expressions R_PAR
+   60 exp_type: . data_type
+   61         | . type_spec
+   62         | . TRUE
+   63         | . FALSE
+   64         | . func_call
+
+    STRING   shift, and go to state 29
+    NOT      shift, and go to state 36
+    TRUE     shift, and go to state 37
+    FALSE    shift, and go to state 38
+    BOOL     shift, and go to state 30
+    RL       shift, and go to state 24
+    POSINT   shift, and go to state 25
+    ID       shift, and go to state 39
+    OP_PLUS  shift, and go to state 40
+    OP_MIN   shift, and go to state 41
+    L_PAR    shift, and go to state 42
+    INT      shift, and go to state 31
+    REAL     shift, and go to state 32
+
+    func_call    go to state 43
+    data_type    go to state 44
+    type_spec    go to state 45
+    expressions  go to state 95
+    exp_type     go to state 47
+
+
+State 72
+
+   11 func_call: . ID L_PAR func_args R_PAR
+   33 data_type: . POSINT
+   34          | . RL
+   35          | . ID
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+   44 expressions: . exp_type
+   45            | . NOT expressions
+   46            | . OP_PLUS expressions
+   47            | . OP_MIN expressions
+   48            | . expressions MOD expressions
+   49            | . expressions DIV expressions
+   50            | . expressions OP_MUL expressions
+   51            | . expressions OP_PLUS expressions
+   52            | . expressions OP_MIN expressions
+   53            | . expressions LST expressions
+   54            | . expressions DIFF expressions
+   54            | expressions DIFF . expressions
+   55            | . expressions EQ expressions
+   56            | . expressions '<' expressions
+   57            | . expressions OP_OR expressions
+   58            | . expressions AND expressions
+   59            | . L_PAR expressions R_PAR
+   60 exp_type: . data_type
+   61         | . type_spec
+   62         | . TRUE
+   63         | . FALSE
+   64         | . func_call
+
+    STRING   shift, and go to state 29
+    NOT      shift, and go to state 36
+    TRUE     shift, and go to state 37
+    FALSE    shift, and go to state 38
+    BOOL     shift, and go to state 30
+    RL       shift, and go to state 24
+    POSINT   shift, and go to state 25
+    ID       shift, and go to state 39
+    OP_PLUS  shift, and go to state 40
+    OP_MIN   shift, and go to state 41
+    L_PAR    shift, and go to state 42
+    INT      shift, and go to state 31
+    REAL     shift, and go to state 32
+
+    func_call    go to state 43
+    data_type    go to state 44
+    type_spec    go to state 45
+    expressions  go to state 96
+    exp_type     go to state 47
+
+
+State 73
+
+   11 func_call: . ID L_PAR func_args R_PAR
+   33 data_type: . POSINT
+   34          | . RL
+   35          | . ID
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+   44 expressions: . exp_type
+   45            | . NOT expressions
+   46            | . OP_PLUS expressions
+   47            | . OP_MIN expressions
+   48            | . expressions MOD expressions
+   49            | . expressions DIV expressions
+   50            | . expressions OP_MUL expressions
+   51            | . expressions OP_PLUS expressions
+   52            | . expressions OP_MIN expressions
+   53            | . expressions LST expressions
+   54            | . expressions DIFF expressions
+   55            | . expressions EQ expressions
+   56            | . expressions '<' expressions
+   56            | expressions '<' . expressions
+   57            | . expressions OP_OR expressions
+   58            | . expressions AND expressions
+   59            | . L_PAR expressions R_PAR
+   60 exp_type: . data_type
+   61         | . type_spec
+   62         | . TRUE
+   63         | . FALSE
+   64         | . func_call
+
+    STRING   shift, and go to state 29
+    NOT      shift, and go to state 36
+    TRUE     shift, and go to state 37
+    FALSE    shift, and go to state 38
+    BOOL     shift, and go to state 30
+    RL       shift, and go to state 24
+    POSINT   shift, and go to state 25
+    ID       shift, and go to state 39
+    OP_PLUS  shift, and go to state 40
+    OP_MIN   shift, and go to state 41
+    L_PAR    shift, and go to state 42
+    INT      shift, and go to state 31
+    REAL     shift, and go to state 32
+
+    func_call    go to state 43
+    data_type    go to state 44
+    type_spec    go to state 45
+    expressions  go to state 97
+    exp_type     go to state 47
+
+
+State 74
+
+    1 program: decl_list CONST START ASSIGN L_PAR . R_PAR COLON type_spec ARROW L_BRAC body R_BRAC
+
+    R_PAR  shift, and go to state 98
+
+
+State 75
+
+   19 param_type: ID COLON . type_spec
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+
+    STRING  shift, and go to state 29
+    BOOL    shift, and go to state 30
+    INT     shift, and go to state 31
+    REAL    shift, and go to state 32
+
+    type_spec  go to state 99
+
+
+State 76
+
+   43 array: ID '[' . POSINT ']'
+
+    POSINT  shift, and go to state 100
+
+
+State 77
+
+   19 param_type: . ID COLON type_spec
+   20           | . array COLON type_spec
+   21           | . ID ',' param_type
+   21           | ID ',' . param_type
+   43 array: . ID '[' POSINT ']'
+
+    ID  shift, and go to state 101
+
+    param_type  go to state 102
+    array       go to state 53
+
+
+State 78
+
+   10 func_decl: CONST ID ASSIGN L_PAR func_param R_PAR . COLON type_spec ARROW L_BRAC func_body R_BRAC
+
+    COLON  shift, and go to state 103
+
+
+State 79
+
+   17 func_param: func_param ',' . param_type
+   19 param_type: . ID COLON type_spec
+   20           | . array COLON type_spec
+   21           | . ID ',' param_type
+   43 array: . ID '[' POSINT ']'
+
+    ID  shift, and go to state 101
+
+    param_type  go to state 104
+    array       go to state 53
+
+
+State 80
+
+   20 param_type: array COLON . type_spec
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+
+    STRING  shift, and go to state 29
+    BOOL    shift, and go to state 30
+    INT     shift, and go to state 31
+    REAL    shift, and go to state 32
+
+    type_spec  go to state 105
+
+
+State 81
+
+    3 decl_list_statement: CONST ID ASSIGN data_type COLON type_spec .
+
+    $default  reduce using rule 3 (decl_list_statement)
+
+
+State 82
+
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+   42 decl_array: ID '[' POSINT ']' COLON . type_spec SEMICOLON
+
+    STRING  shift, and go to state 29
+    BOOL    shift, and go to state 30
+    INT     shift, and go to state 31
+    REAL    shift, and go to state 32
+
+    type_spec  go to state 106
+
+
+State 83
+
+   11 func_call: ID L_PAR func_args . R_PAR
+   13 func_args: func_args . ',' case_comma
+
+    R_PAR  shift, and go to state 107
+    ','    shift, and go to state 108
+
+
+State 84
+
+   14 func_args: expressions .  [R_PAR, ',']
+   48 expressions: expressions . MOD expressions
+   49            | expressions . DIV expressions
+   50            | expressions . OP_MUL expressions
+   51            | expressions . OP_PLUS expressions
+   52            | expressions . OP_MIN expressions
+   53            | expressions . LST expressions
+   54            | expressions . DIFF expressions
+   55            | expressions . EQ expressions
+   56            | expressions . '<' expressions
+   57            | expressions . OP_OR expressions
+   58            | expressions . AND expressions
+
+    AND      shift, and go to state 62
+    OP_OR    shift, and go to state 63
+    LST      shift, and go to state 64
+    EQ       shift, and go to state 65
+    OP_PLUS  shift, and go to state 66
+    OP_MIN   shift, and go to state 67
+    DIV      shift, and go to state 68
+    OP_MUL   shift, and go to state 69
+    MOD      shift, and go to state 71
+    DIFF     shift, and go to state 72
+    '<'      shift, and go to state 73
+
+    $default  reduce using rule 14 (func_args)
+
+
+State 85
+
+   59 expressions: L_PAR expressions R_PAR .
+
+    $default  reduce using rule 59 (expressions)
+
+
+State 86
+
+   48 expressions: expressions . MOD expressions
+   49            | expressions . DIV expressions
+   50            | expressions . OP_MUL expressions
+   51            | expressions . OP_PLUS expressions
+   52            | expressions . OP_MIN expressions
+   53            | expressions . LST expressions
+   54            | expressions . DIFF expressions
+   55            | expressions . EQ expressions
+   56            | expressions . '<' expressions
+   57            | expressions . OP_OR expressions
+   58            | expressions . AND expressions
+   58            | expressions AND expressions .  [AND, OP_OR, LOOP, LST, EQ, OP_PLUS, OP_MIN, R_PAR, DIV, OP_MUL, SEMICOLON, COLON, MOD, DIFF, THEN, '<', ',']
+
+    AND      shift, and go to state 62
+    OP_OR    shift, and go to state 63
+    LST      shift, and go to state 64
+    EQ       shift, and go to state 65
+    OP_PLUS  shift, and go to state 66
+    OP_MIN   shift, and go to state 67
+    DIV      shift, and go to state 68
+    OP_MUL   shift, and go to state 69
+    MOD      shift, and go to state 71
+    DIFF     shift, and go to state 72
+    '<'      shift, and go to state 73
+
+    AND       [reduce using rule 58 (expressions)]
+    OP_OR     [reduce using rule 58 (expressions)]
+    LST       [reduce using rule 58 (expressions)]
+    EQ        [reduce using rule 58 (expressions)]
+    OP_PLUS   [reduce using rule 58 (expressions)]
+    OP_MIN    [reduce using rule 58 (expressions)]
+    DIV       [reduce using rule 58 (expressions)]
+    OP_MUL    [reduce using rule 58 (expressions)]
+    MOD       [reduce using rule 58 (expressions)]
+    DIFF      [reduce using rule 58 (expressions)]
+    '<'       [reduce using rule 58 (expressions)]
+    $default  reduce using rule 58 (expressions)
+
+
+State 87
+
+   48 expressions: expressions . MOD expressions
+   49            | expressions . DIV expressions
+   50            | expressions . OP_MUL expressions
+   51            | expressions . OP_PLUS expressions
+   52            | expressions . OP_MIN expressions
+   53            | expressions . LST expressions
+   54            | expressions . DIFF expressions
+   55            | expressions . EQ expressions
+   56            | expressions . '<' expressions
+   57            | expressions . OP_OR expressions
+   57            | expressions OP_OR expressions .  [AND, OP_OR, LOOP, LST, EQ, OP_PLUS, OP_MIN, R_PAR, DIV, OP_MUL, SEMICOLON, COLON, MOD, DIFF, THEN, '<', ',']
+   58            | expressions . AND expressions
+
+    AND      shift, and go to state 62
+    OP_OR    shift, and go to state 63
+    LST      shift, and go to state 64
+    EQ       shift, and go to state 65
+    OP_PLUS  shift, and go to state 66
+    OP_MIN   shift, and go to state 67
+    DIV      shift, and go to state 68
+    OP_MUL   shift, and go to state 69
+    MOD      shift, and go to state 71
+    DIFF     shift, and go to state 72
+    '<'      shift, and go to state 73
+
+    AND       [reduce using rule 57 (expressions)]
+    OP_OR     [reduce using rule 57 (expressions)]
+    LST       [reduce using rule 57 (expressions)]
+    EQ        [reduce using rule 57 (expressions)]
+    OP_PLUS   [reduce using rule 57 (expressions)]
+    OP_MIN    [reduce using rule 57 (expressions)]
+    DIV       [reduce using rule 57 (expressions)]
+    OP_MUL    [reduce using rule 57 (expressions)]
+    MOD       [reduce using rule 57 (expressions)]
+    DIFF      [reduce using rule 57 (expressions)]
+    '<'       [reduce using rule 57 (expressions)]
+    $default  reduce using rule 57 (expressions)
+
+
+State 88
+
+   48 expressions: expressions . MOD expressions
+   49            | expressions . DIV expressions
+   50            | expressions . OP_MUL expressions
+   51            | expressions . OP_PLUS expressions
+   52            | expressions . OP_MIN expressions
+   53            | expressions . LST expressions
+   53            | expressions LST expressions .  [AND, OP_OR, LOOP, LST, EQ, OP_PLUS, OP_MIN, R_PAR, DIV, OP_MUL, SEMICOLON, COLON, MOD, DIFF, THEN, '<', ',']
+   54            | expressions . DIFF expressions
+   55            | expressions . EQ expressions
+   56            | expressions . '<' expressions
+   57            | expressions . OP_OR expressions
+   58            | expressions . AND expressions
+
+    AND      shift, and go to state 62
+    OP_OR    shift, and go to state 63
+    LST      shift, and go to state 64
+    EQ       shift, and go to state 65
+    OP_PLUS  shift, and go to state 66
+    OP_MIN   shift, and go to state 67
+    DIV      shift, and go to state 68
+    OP_MUL   shift, and go to state 69
+    MOD      shift, and go to state 71
+    DIFF     shift, and go to state 72
+    '<'      shift, and go to state 73
+
+    AND       [reduce using rule 53 (expressions)]
+    OP_OR     [reduce using rule 53 (expressions)]
+    LST       [reduce using rule 53 (expressions)]
+    EQ        [reduce using rule 53 (expressions)]
+    OP_PLUS   [reduce using rule 53 (expressions)]
+    OP_MIN    [reduce using rule 53 (expressions)]
+    DIV       [reduce using rule 53 (expressions)]
+    OP_MUL    [reduce using rule 53 (expressions)]
+    MOD       [reduce using rule 53 (expressions)]
+    DIFF      [reduce using rule 53 (expressions)]
+    '<'       [reduce using rule 53 (expressions)]
+    $default  reduce using rule 53 (expressions)
+
+
+State 89
+
+   48 expressions: expressions . MOD expressions
+   49            | expressions . DIV expressions
+   50            | expressions . OP_MUL expressions
+   51            | expressions . OP_PLUS expressions
+   52            | expressions . OP_MIN expressions
+   53            | expressions . LST expressions
+   54            | expressions . DIFF expressions
+   55            | expressions . EQ expressions
+   55            | expressions EQ expressions .  [AND, OP_OR, LOOP, LST, EQ, OP_PLUS, OP_MIN, R_PAR, DIV, OP_MUL, SEMICOLON, COLON, MOD, DIFF, THEN, '<', ',']
+   56            | expressions . '<' expressions
+   57            | expressions . OP_OR expressions
+   58            | expressions . AND expressions
+
+    AND      shift, and go to state 62
+    OP_OR    shift, and go to state 63
+    LST      shift, and go to state 64
+    EQ       shift, and go to state 65
+    OP_PLUS  shift, and go to state 66
+    OP_MIN   shift, and go to state 67
+    DIV      shift, and go to state 68
+    OP_MUL   shift, and go to state 69
+    MOD      shift, and go to state 71
+    DIFF     shift, and go to state 72
+    '<'      shift, and go to state 73
+
+    AND       [reduce using rule 55 (expressions)]
+    OP_OR     [reduce using rule 55 (expressions)]
+    LST       [reduce using rule 55 (expressions)]
+    EQ        [reduce using rule 55 (expressions)]
+    OP_PLUS   [reduce using rule 55 (expressions)]
+    OP_MIN    [reduce using rule 55 (expressions)]
+    DIV       [reduce using rule 55 (expressions)]
+    OP_MUL    [reduce using rule 55 (expressions)]
+    MOD       [reduce using rule 55 (expressions)]
+    DIFF      [reduce using rule 55 (expressions)]
+    '<'       [reduce using rule 55 (expressions)]
+    $default  reduce using rule 55 (expressions)
+
+
+State 90
+
+   48 expressions: expressions . MOD expressions
+   49            | expressions . DIV expressions
+   50            | expressions . OP_MUL expressions
+   51            | expressions . OP_PLUS expressions
+   51            | expressions OP_PLUS expressions .  [AND, OP_OR, LOOP, LST, EQ, OP_PLUS, OP_MIN, R_PAR, DIV, OP_MUL, SEMICOLON, COLON, MOD, DIFF, THEN, '<', ',']
+   52            | expressions . OP_MIN expressions
+   53            | expressions . LST expressions
+   54            | expressions . DIFF expressions
+   55            | expressions . EQ expressions
+   56            | expressions . '<' expressions
+   57            | expressions . OP_OR expressions
+   58            | expressions . AND expressions
+
+    AND      shift, and go to state 62
+    OP_OR    shift, and go to state 63
+    LST      shift, and go to state 64
+    EQ       shift, and go to state 65
+    OP_PLUS  shift, and go to state 66
+    OP_MIN   shift, and go to state 67
+    DIV      shift, and go to state 68
+    OP_MUL   shift, and go to state 69
+    MOD      shift, and go to state 71
+    DIFF     shift, and go to state 72
+    '<'      shift, and go to state 73
+
+    AND       [reduce using rule 51 (expressions)]
+    OP_OR     [reduce using rule 51 (expressions)]
+    LST       [reduce using rule 51 (expressions)]
+    EQ        [reduce using rule 51 (expressions)]
+    OP_PLUS   [reduce using rule 51 (expressions)]
+    OP_MIN    [reduce using rule 51 (expressions)]
+    DIV       [reduce using rule 51 (expressions)]
+    OP_MUL    [reduce using rule 51 (expressions)]
+    MOD       [reduce using rule 51 (expressions)]
+    DIFF      [reduce using rule 51 (expressions)]
+    '<'       [reduce using rule 51 (expressions)]
+    $default  reduce using rule 51 (expressions)
+
+
+State 91
+
+   48 expressions: expressions . MOD expressions
+   49            | expressions . DIV expressions
+   50            | expressions . OP_MUL expressions
+   51            | expressions . OP_PLUS expressions
+   52            | expressions . OP_MIN expressions
+   52            | expressions OP_MIN expressions .  [AND, OP_OR, LOOP, LST, EQ, OP_PLUS, OP_MIN, R_PAR, DIV, OP_MUL, SEMICOLON, COLON, MOD, DIFF, THEN, '<', ',']
+   53            | expressions . LST expressions
+   54            | expressions . DIFF expressions
+   55            | expressions . EQ expressions
+   56            | expressions . '<' expressions
+   57            | expressions . OP_OR expressions
+   58            | expressions . AND expressions
+
+    AND      shift, and go to state 62
+    OP_OR    shift, and go to state 63
+    LST      shift, and go to state 64
+    EQ       shift, and go to state 65
+    OP_PLUS  shift, and go to state 66
+    OP_MIN   shift, and go to state 67
+    DIV      shift, and go to state 68
+    OP_MUL   shift, and go to state 69
+    MOD      shift, and go to state 71
+    DIFF     shift, and go to state 72
+
+    AND       [reduce using rule 52 (expressions)]
+    OP_OR     [reduce using rule 52 (expressions)]
+    LST       [reduce using rule 52 (expressions)]
+    EQ        [reduce using rule 52 (expressions)]
+    OP_PLUS   [reduce using rule 52 (expressions)]
+    OP_MIN    [reduce using rule 52 (expressions)]
+    DIV       [reduce using rule 52 (expressions)]
+    OP_MUL    [reduce using rule 52 (expressions)]
+    MOD       [reduce using rule 52 (expressions)]
+    DIFF      [reduce using rule 52 (expressions)]
+    $default  reduce using rule 52 (expressions)
+
+    Conflict between rule 52 and token '<' resolved as reduce (%left '<').
+
+
+State 92
+
+   48 expressions: expressions . MOD expressions
+   49            | expressions . DIV expressions
+   49            | expressions DIV expressions .  [AND, OP_OR, LOOP, LST, EQ, OP_PLUS, OP_MIN, R_PAR, DIV, OP_MUL, SEMICOLON, COLON, MOD, DIFF, THEN, '<', ',']
+   50            | expressions . OP_MUL expressions
+   51            | expressions . OP_PLUS expressions
+   52            | expressions . OP_MIN expressions
+   53            | expressions . LST expressions
+   54            | expressions . DIFF expressions
+   55            | expressions . EQ expressions
+   56            | expressions . '<' expressions
+   57            | expressions . OP_OR expressions
+   58            | expressions . AND expressions
+
+    AND      shift, and go to state 62
+    OP_OR    shift, and go to state 63
+    LST      shift, and go to state 64
+    EQ       shift, and go to state 65
+    OP_PLUS  shift, and go to state 66
+    OP_MIN   shift, and go to state 67
+    DIV      shift, and go to state 68
+    OP_MUL   shift, and go to state 69
+    MOD      shift, and go to state 71
+    DIFF     shift, and go to state 72
+    '<'      shift, and go to state 73
+
+    AND       [reduce using rule 49 (expressions)]
+    OP_OR     [reduce using rule 49 (expressions)]
+    LST       [reduce using rule 49 (expressions)]
+    EQ        [reduce using rule 49 (expressions)]
+    OP_PLUS   [reduce using rule 49 (expressions)]
+    OP_MIN    [reduce using rule 49 (expressions)]
+    DIV       [reduce using rule 49 (expressions)]
+    OP_MUL    [reduce using rule 49 (expressions)]
+    MOD       [reduce using rule 49 (expressions)]
+    DIFF      [reduce using rule 49 (expressions)]
+    '<'       [reduce using rule 49 (expressions)]
+    $default  reduce using rule 49 (expressions)
+
+
+State 93
+
+   48 expressions: expressions . MOD expressions
+   49            | expressions . DIV expressions
+   50            | expressions . OP_MUL expressions
+   50            | expressions OP_MUL expressions .  [AND, OP_OR, LOOP, LST, EQ, OP_PLUS, OP_MIN, R_PAR, DIV, OP_MUL, SEMICOLON, COLON, MOD, DIFF, THEN, '<', ',']
+   51            | expressions . OP_PLUS expressions
+   52            | expressions . OP_MIN expressions
+   53            | expressions . LST expressions
+   54            | expressions . DIFF expressions
+   55            | expressions . EQ expressions
+   56            | expressions . '<' expressions
+   57            | expressions . OP_OR expressions
+   58            | expressions . AND expressions
+
+    AND      shift, and go to state 62
+    OP_OR    shift, and go to state 63
+    LST      shift, and go to state 64
+    EQ       shift, and go to state 65
+    OP_PLUS  shift, and go to state 66
+    OP_MIN   shift, and go to state 67
+    DIV      shift, and go to state 68
+    OP_MUL   shift, and go to state 69
+    MOD      shift, and go to state 71
+    DIFF     shift, and go to state 72
+    '<'      shift, and go to state 73
+
+    AND       [reduce using rule 50 (expressions)]
+    OP_OR     [reduce using rule 50 (expressions)]
+    LST       [reduce using rule 50 (expressions)]
+    EQ        [reduce using rule 50 (expressions)]
+    OP_PLUS   [reduce using rule 50 (expressions)]
+    OP_MIN    [reduce using rule 50 (expressions)]
+    DIV       [reduce using rule 50 (expressions)]
+    OP_MUL    [reduce using rule 50 (expressions)]
+    MOD       [reduce using rule 50 (expressions)]
+    DIFF      [reduce using rule 50 (expressions)]
+    '<'       [reduce using rule 50 (expressions)]
+    $default  reduce using rule 50 (expressions)
+
+
+State 94
+
+    5 decl_list_statement: LET case_comma ASSIGN expressions COLON type_spec .
+
+    $default  reduce using rule 5 (decl_list_statement)
+
+
+State 95
+
+   48 expressions: expressions . MOD expressions
+   48            | expressions MOD expressions .  [AND, OP_OR, LOOP, LST, EQ, OP_PLUS, OP_MIN, R_PAR, DIV, OP_MUL, SEMICOLON, COLON, MOD, DIFF, THEN, '<', ',']
+   49            | expressions . DIV expressions
+   50            | expressions . OP_MUL expressions
+   51            | expressions . OP_PLUS expressions
+   52            | expressions . OP_MIN expressions
+   53            | expressions . LST expressions
+   54            | expressions . DIFF expressions
+   55            | expressions . EQ expressions
+   56            | expressions . '<' expressions
+   57            | expressions . OP_OR expressions
+   58            | expressions . AND expressions
+
+    AND      shift, and go to state 62
+    OP_OR    shift, and go to state 63
+    LST      shift, and go to state 64
+    EQ       shift, and go to state 65
+    OP_PLUS  shift, and go to state 66
+    OP_MIN   shift, and go to state 67
+    DIV      shift, and go to state 68
+    OP_MUL   shift, and go to state 69
+    MOD      shift, and go to state 71
+    DIFF     shift, and go to state 72
+    '<'      shift, and go to state 73
+
+    AND       [reduce using rule 48 (expressions)]
+    OP_OR     [reduce using rule 48 (expressions)]
+    LST       [reduce using rule 48 (expressions)]
+    EQ        [reduce using rule 48 (expressions)]
+    OP_PLUS   [reduce using rule 48 (expressions)]
+    OP_MIN    [reduce using rule 48 (expressions)]
+    DIV       [reduce using rule 48 (expressions)]
+    OP_MUL    [reduce using rule 48 (expressions)]
+    MOD       [reduce using rule 48 (expressions)]
+    DIFF      [reduce using rule 48 (expressions)]
+    '<'       [reduce using rule 48 (expressions)]
+    $default  reduce using rule 48 (expressions)
+
+
+State 96
+
+   48 expressions: expressions . MOD expressions
+   49            | expressions . DIV expressions
+   50            | expressions . OP_MUL expressions
+   51            | expressions . OP_PLUS expressions
+   52            | expressions . OP_MIN expressions
+   53            | expressions . LST expressions
+   54            | expressions . DIFF expressions
+   54            | expressions DIFF expressions .  [AND, OP_OR, LOOP, LST, EQ, OP_PLUS, OP_MIN, R_PAR, DIV, OP_MUL, SEMICOLON, COLON, MOD, DIFF, THEN, '<', ',']
+   55            | expressions . EQ expressions
+   56            | expressions . '<' expressions
+   57            | expressions . OP_OR expressions
+   58            | expressions . AND expressions
+
+    AND      shift, and go to state 62
+    OP_OR    shift, and go to state 63
+    LST      shift, and go to state 64
+    EQ       shift, and go to state 65
+    OP_PLUS  shift, and go to state 66
+    OP_MIN   shift, and go to state 67
+    DIV      shift, and go to state 68
+    OP_MUL   shift, and go to state 69
+    MOD      shift, and go to state 71
+    DIFF     shift, and go to state 72
+    '<'      shift, and go to state 73
+
+    AND       [reduce using rule 54 (expressions)]
+    OP_OR     [reduce using rule 54 (expressions)]
+    LST       [reduce using rule 54 (expressions)]
+    EQ        [reduce using rule 54 (expressions)]
+    OP_PLUS   [reduce using rule 54 (expressions)]
+    OP_MIN    [reduce using rule 54 (expressions)]
+    DIV       [reduce using rule 54 (expressions)]
+    OP_MUL    [reduce using rule 54 (expressions)]
+    MOD       [reduce using rule 54 (expressions)]
+    DIFF      [reduce using rule 54 (expressions)]
+    '<'       [reduce using rule 54 (expressions)]
+    $default  reduce using rule 54 (expressions)
+
+
+State 97
+
+   48 expressions: expressions . MOD expressions
+   49            | expressions . DIV expressions
+   50            | expressions . OP_MUL expressions
+   51            | expressions . OP_PLUS expressions
+   52            | expressions . OP_MIN expressions
+   53            | expressions . LST expressions
+   54            | expressions . DIFF expressions
+   55            | expressions . EQ expressions
+   56            | expressions . '<' expressions
+   56            | expressions '<' expressions .  [AND, OP_OR, LOOP, LST, EQ, OP_PLUS, OP_MIN, R_PAR, DIV, OP_MUL, SEMICOLON, COLON, MOD, DIFF, THEN, '<', ',']
+   57            | expressions . OP_OR expressions
+   58            | expressions . AND expressions
+
+    AND      shift, and go to state 62
+    OP_OR    shift, and go to state 63
+    LST      shift, and go to state 64
+    EQ       shift, and go to state 65
+    OP_PLUS  shift, and go to state 66
+    OP_MIN   shift, and go to state 67
+    DIV      shift, and go to state 68
+    OP_MUL   shift, and go to state 69
+    MOD      shift, and go to state 71
+    DIFF     shift, and go to state 72
+
+    AND       [reduce using rule 56 (expressions)]
+    OP_OR     [reduce using rule 56 (expressions)]
+    LST       [reduce using rule 56 (expressions)]
+    EQ        [reduce using rule 56 (expressions)]
+    OP_PLUS   [reduce using rule 56 (expressions)]
+    OP_MIN    [reduce using rule 56 (expressions)]
+    DIV       [reduce using rule 56 (expressions)]
+    OP_MUL    [reduce using rule 56 (expressions)]
+    MOD       [reduce using rule 56 (expressions)]
+    DIFF      [reduce using rule 56 (expressions)]
+    $default  reduce using rule 56 (expressions)
+
+    Conflict between rule 56 and token '<' resolved as reduce (%left '<').
+
+
+State 98
+
+    1 program: decl_list CONST START ASSIGN L_PAR R_PAR . COLON type_spec ARROW L_BRAC body R_BRAC
+
+    COLON  shift, and go to state 109
+
+
+State 99
+
+   19 param_type: ID COLON type_spec .
+
+    $default  reduce using rule 19 (param_type)
+
+
+State 100
+
+   43 array: ID '[' POSINT . ']'
+
+    ']'  shift, and go to state 110
+
+
+State 101
+
+   19 param_type: ID . COLON type_spec
+   21           | ID . ',' param_type
+   43 array: ID . '[' POSINT ']'
+
+    COLON  shift, and go to state 75
+    '['    shift, and go to state 76
+    ','    shift, and go to state 77
+
+
+State 102
+
+   21 param_type: ID ',' param_type .
+
+    $default  reduce using rule 21 (param_type)
+
+
+State 103
+
+   10 func_decl: CONST ID ASSIGN L_PAR func_param R_PAR COLON . type_spec ARROW L_BRAC func_body R_BRAC
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+
+    STRING  shift, and go to state 29
+    BOOL    shift, and go to state 30
+    INT     shift, and go to state 31
+    REAL    shift, and go to state 32
+
+    type_spec  go to state 111
+
+
+State 104
+
+   17 func_param: func_param ',' param_type .
+
+    $default  reduce using rule 17 (func_param)
+
+
+State 105
+
+   20 param_type: array COLON type_spec .
+
+    $default  reduce using rule 20 (param_type)
+
+
+State 106
+
+   42 decl_array: ID '[' POSINT ']' COLON type_spec . SEMICOLON
+
+    SEMICOLON  shift, and go to state 112
+
+
+State 107
+
+   11 func_call: ID L_PAR func_args R_PAR .
+
+    $default  reduce using rule 11 (func_call)
+
+
+State 108
+
+   13 func_args: func_args ',' . case_comma
+   40 case_comma: . ID
+   41           | . case_comma ',' ID
+
+    ID  shift, and go to state 113
+
+    case_comma  go to state 114
+
+
+State 109
+
+    1 program: decl_list CONST START ASSIGN L_PAR R_PAR COLON . type_spec ARROW L_BRAC body R_BRAC
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+
+    STRING  shift, and go to state 29
+    BOOL    shift, and go to state 30
+    INT     shift, and go to state 31
+    REAL    shift, and go to state 32
+
+    type_spec  go to state 115
+
+
+State 110
+
+   43 array: ID '[' POSINT ']' .
+
+    $default  reduce using rule 43 (array)
+
+
+State 111
+
+   10 func_decl: CONST ID ASSIGN L_PAR func_param R_PAR COLON type_spec . ARROW L_BRAC func_body R_BRAC
+
+    ARROW  shift, and go to state 116
+
+
+State 112
+
+   42 decl_array: ID '[' POSINT ']' COLON type_spec SEMICOLON .
+
+    $default  reduce using rule 42 (decl_array)
+
+
+State 113
+
+   40 case_comma: ID .
+
+    $default  reduce using rule 40 (case_comma)
+
+
+State 114
+
+   13 func_args: func_args ',' case_comma .  [R_PAR, ',']
+   41 case_comma: case_comma . ',' ID
+
+    ','  shift, and go to state 18
+
+    ','       [reduce using rule 13 (func_args)]
+    $default  reduce using rule 13 (func_args)
+
+
+State 115
+
+    1 program: decl_list CONST START ASSIGN L_PAR R_PAR COLON type_spec . ARROW L_BRAC body R_BRAC
+
+    ARROW  shift, and go to state 117
+
+
+State 116
+
+   10 func_decl: CONST ID ASSIGN L_PAR func_param R_PAR COLON type_spec ARROW . L_BRAC func_body R_BRAC
+
+    L_BRAC  shift, and go to state 118
+
+
+State 117
+
+    1 program: decl_list CONST START ASSIGN L_PAR R_PAR COLON type_spec ARROW . L_BRAC body R_BRAC
+
+    L_BRAC  shift, and go to state 119
+
+
+State 118
+
+    2 decl_list_statement: . CONST case_comma COLON type_spec
+    3                    | . CONST ID ASSIGN data_type COLON type_spec
+    4                    | . LET case_comma COLON type_spec
+    5                    | . LET case_comma ASSIGN expressions COLON type_spec
+    6                    | . LET decl_array
+    7                    | . func_decl
+   10 func_decl: . CONST ID ASSIGN L_PAR func_param R_PAR COLON type_spec ARROW L_BRAC func_body R_BRAC
+   10          | CONST ID ASSIGN L_PAR func_param R_PAR COLON type_spec ARROW L_BRAC . func_body R_BRAC
+   11 func_call: . ID L_PAR func_args R_PAR
+   22 func_body: . statement_list
+   24 statement_list: . statement SEMICOLON
+   25               | . statement_list statement SEMICOLON
+   26 statement: . func_call
+   27          | . ID ASSIGN expressions
+   28          | . decl_list_statement
+   29          | . oth_statement
+   30 oth_statement: . if_case
+   31              | . while_case
+   32              | . ret
+   65 ret: . RET
+   66    | . RET expressions
+   67 if_case: . IF expressions THEN statement_list FI
+   68        | . IF expressions THEN statement_list ELSE statement_list FI
+   69 while_case: . WHILE expressions LOOP statement_list POOL
+
+    IF     shift, and go to state 120
+    WHILE  shift, and go to state 121
+    ID     shift, and go to state 122
+    CONST  shift, and go to state 1
+    LET    shift, and go to state 2
+    RET    shift, and go to state 123
+
+    decl_list_statement  go to state 124
+    func_decl            go to state 6
+    func_call            go to state 125
+    func_body            go to state 126
+    statement_list       go to state 127
+    statement            go to state 128
+    oth_statement        go to state 129
+    ret                  go to state 130
+    if_case              go to state 131
+    while_case           go to state 132
+
+
+State 119
+
+    1 program: decl_list CONST START ASSIGN L_PAR R_PAR COLON type_spec ARROW L_BRAC . body R_BRAC
+    2 decl_list_statement: . CONST case_comma COLON type_spec
+    3                    | . CONST ID ASSIGN data_type COLON type_spec
+    4                    | . LET case_comma COLON type_spec
+    5                    | . LET case_comma ASSIGN expressions COLON type_spec
+    6                    | . LET decl_array
+    7                    | . func_decl
+   10 func_decl: . CONST ID ASSIGN L_PAR func_param R_PAR COLON type_spec ARROW L_BRAC func_body R_BRAC
+   11 func_call: . ID L_PAR func_args R_PAR
+   23 body: . statement_list
+   24 statement_list: . statement SEMICOLON
+   25               | . statement_list statement SEMICOLON
+   26 statement: . func_call
+   27          | . ID ASSIGN expressions
+   28          | . decl_list_statement
+   29          | . oth_statement
+   30 oth_statement: . if_case
+   31              | . while_case
+   32              | . ret
+   65 ret: . RET
+   66    | . RET expressions
+   67 if_case: . IF expressions THEN statement_list FI
+   68        | . IF expressions THEN statement_list ELSE statement_list FI
+   69 while_case: . WHILE expressions LOOP statement_list POOL
+
+    IF     shift, and go to state 120
+    WHILE  shift, and go to state 121
+    ID     shift, and go to state 122
+    CONST  shift, and go to state 1
+    LET    shift, and go to state 2
+    RET    shift, and go to state 123
+
+    decl_list_statement  go to state 124
+    func_decl            go to state 6
+    func_call            go to state 125
+    body                 go to state 133
+    statement_list       go to state 134
+    statement            go to state 128
+    oth_statement        go to state 129
+    ret                  go to state 130
+    if_case              go to state 131
+    while_case           go to state 132
+
+
+State 120
+
+   11 func_call: . ID L_PAR func_args R_PAR
+   33 data_type: . POSINT
+   34          | . RL
+   35          | . ID
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+   44 expressions: . exp_type
+   45            | . NOT expressions
+   46            | . OP_PLUS expressions
+   47            | . OP_MIN expressions
+   48            | . expressions MOD expressions
+   49            | . expressions DIV expressions
+   50            | . expressions OP_MUL expressions
+   51            | . expressions OP_PLUS expressions
+   52            | . expressions OP_MIN expressions
+   53            | . expressions LST expressions
+   54            | . expressions DIFF expressions
+   55            | . expressions EQ expressions
+   56            | . expressions '<' expressions
+   57            | . expressions OP_OR expressions
+   58            | . expressions AND expressions
+   59            | . L_PAR expressions R_PAR
+   60 exp_type: . data_type
+   61         | . type_spec
+   62         | . TRUE
+   63         | . FALSE
+   64         | . func_call
+   67 if_case: IF . expressions THEN statement_list FI
+   68        | IF . expressions THEN statement_list ELSE statement_list FI
+
+    STRING   shift, and go to state 29
+    NOT      shift, and go to state 36
+    TRUE     shift, and go to state 37
+    FALSE    shift, and go to state 38
+    BOOL     shift, and go to state 30
+    RL       shift, and go to state 24
+    POSINT   shift, and go to state 25
+    ID       shift, and go to state 39
+    OP_PLUS  shift, and go to state 40
+    OP_MIN   shift, and go to state 41
+    L_PAR    shift, and go to state 42
+    INT      shift, and go to state 31
+    REAL     shift, and go to state 32
+
+    func_call    go to state 43
+    data_type    go to state 44
+    type_spec    go to state 45
+    expressions  go to state 135
+    exp_type     go to state 47
+
+
+State 121
+
+   11 func_call: . ID L_PAR func_args R_PAR
+   33 data_type: . POSINT
+   34          | . RL
+   35          | . ID
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+   44 expressions: . exp_type
+   45            | . NOT expressions
+   46            | . OP_PLUS expressions
+   47            | . OP_MIN expressions
+   48            | . expressions MOD expressions
+   49            | . expressions DIV expressions
+   50            | . expressions OP_MUL expressions
+   51            | . expressions OP_PLUS expressions
+   52            | . expressions OP_MIN expressions
+   53            | . expressions LST expressions
+   54            | . expressions DIFF expressions
+   55            | . expressions EQ expressions
+   56            | . expressions '<' expressions
+   57            | . expressions OP_OR expressions
+   58            | . expressions AND expressions
+   59            | . L_PAR expressions R_PAR
+   60 exp_type: . data_type
+   61         | . type_spec
+   62         | . TRUE
+   63         | . FALSE
+   64         | . func_call
+   69 while_case: WHILE . expressions LOOP statement_list POOL
+
+    STRING   shift, and go to state 29
+    NOT      shift, and go to state 36
+    TRUE     shift, and go to state 37
+    FALSE    shift, and go to state 38
+    BOOL     shift, and go to state 30
+    RL       shift, and go to state 24
+    POSINT   shift, and go to state 25
+    ID       shift, and go to state 39
+    OP_PLUS  shift, and go to state 40
+    OP_MIN   shift, and go to state 41
+    L_PAR    shift, and go to state 42
+    INT      shift, and go to state 31
+    REAL     shift, and go to state 32
+
+    func_call    go to state 43
+    data_type    go to state 44
+    type_spec    go to state 45
+    expressions  go to state 136
+    exp_type     go to state 47
+
+
+State 122
+
+   11 func_call: ID . L_PAR func_args R_PAR
+   27 statement: ID . ASSIGN expressions
+
+    ASSIGN  shift, and go to state 137
+    L_PAR   shift, and go to state 58
+
+
+State 123
+
+   11 func_call: . ID L_PAR func_args R_PAR
+   33 data_type: . POSINT
+   34          | . RL
+   35          | . ID
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+   44 expressions: . exp_type
+   45            | . NOT expressions
+   46            | . OP_PLUS expressions
+   47            | . OP_MIN expressions
+   48            | . expressions MOD expressions
+   49            | . expressions DIV expressions
+   50            | . expressions OP_MUL expressions
+   51            | . expressions OP_PLUS expressions
+   52            | . expressions OP_MIN expressions
+   53            | . expressions LST expressions
+   54            | . expressions DIFF expressions
+   55            | . expressions EQ expressions
+   56            | . expressions '<' expressions
+   57            | . expressions OP_OR expressions
+   58            | . expressions AND expressions
+   59            | . L_PAR expressions R_PAR
+   60 exp_type: . data_type
+   61         | . type_spec
+   62         | . TRUE
+   63         | . FALSE
+   64         | . func_call
+   65 ret: RET .  [SEMICOLON]
+   66    | RET . expressions
+
+    STRING   shift, and go to state 29
+    NOT      shift, and go to state 36
+    TRUE     shift, and go to state 37
+    FALSE    shift, and go to state 38
+    BOOL     shift, and go to state 30
+    RL       shift, and go to state 24
+    POSINT   shift, and go to state 25
+    ID       shift, and go to state 39
+    OP_PLUS  shift, and go to state 40
+    OP_MIN   shift, and go to state 41
+    L_PAR    shift, and go to state 42
+    INT      shift, and go to state 31
+    REAL     shift, and go to state 32
+
+    $default  reduce using rule 65 (ret)
+
+    func_call    go to state 43
+    data_type    go to state 44
+    type_spec    go to state 45
+    expressions  go to state 138
+    exp_type     go to state 47
+
+
+State 124
+
+   28 statement: decl_list_statement .
+
+    $default  reduce using rule 28 (statement)
+
+
+State 125
+
+   26 statement: func_call .
+
+    $default  reduce using rule 26 (statement)
+
+
+State 126
+
+   10 func_decl: CONST ID ASSIGN L_PAR func_param R_PAR COLON type_spec ARROW L_BRAC func_body . R_BRAC
+
+    R_BRAC  shift, and go to state 139
+
+
+State 127
+
+    2 decl_list_statement: . CONST case_comma COLON type_spec
+    3                    | . CONST ID ASSIGN data_type COLON type_spec
+    4                    | . LET case_comma COLON type_spec
+    5                    | . LET case_comma ASSIGN expressions COLON type_spec
+    6                    | . LET decl_array
+    7                    | . func_decl
+   10 func_decl: . CONST ID ASSIGN L_PAR func_param R_PAR COLON type_spec ARROW L_BRAC func_body R_BRAC
+   11 func_call: . ID L_PAR func_args R_PAR
+   22 func_body: statement_list .  [R_BRAC]
+   25 statement_list: statement_list . statement SEMICOLON
+   26 statement: . func_call
+   27          | . ID ASSIGN expressions
+   28          | . decl_list_statement
+   29          | . oth_statement
+   30 oth_statement: . if_case
+   31              | . while_case
+   32              | . ret
+   65 ret: . RET
+   66    | . RET expressions
+   67 if_case: . IF expressions THEN statement_list FI
+   68        | . IF expressions THEN statement_list ELSE statement_list FI
+   69 while_case: . WHILE expressions LOOP statement_list POOL
+
+    IF     shift, and go to state 120
+    WHILE  shift, and go to state 121
+    ID     shift, and go to state 122
+    CONST  shift, and go to state 1
+    LET    shift, and go to state 2
+    RET    shift, and go to state 123
+
+    $default  reduce using rule 22 (func_body)
+
+    decl_list_statement  go to state 124
+    func_decl            go to state 6
+    func_call            go to state 125
+    statement            go to state 140
+    oth_statement        go to state 129
+    ret                  go to state 130
+    if_case              go to state 131
+    while_case           go to state 132
+
+
+State 128
+
+   24 statement_list: statement . SEMICOLON
+
+    SEMICOLON  shift, and go to state 141
+
+
+State 129
+
+   29 statement: oth_statement .
+
+    $default  reduce using rule 29 (statement)
+
+
+State 130
+
+   32 oth_statement: ret .
+
+    $default  reduce using rule 32 (oth_statement)
+
+
+State 131
+
+   30 oth_statement: if_case .
+
+    $default  reduce using rule 30 (oth_statement)
+
+
+State 132
+
+   31 oth_statement: while_case .
+
+    $default  reduce using rule 31 (oth_statement)
+
+
+State 133
+
+    1 program: decl_list CONST START ASSIGN L_PAR R_PAR COLON type_spec ARROW L_BRAC body . R_BRAC
+
+    R_BRAC  shift, and go to state 142
+
+
+State 134
+
+    2 decl_list_statement: . CONST case_comma COLON type_spec
+    3                    | . CONST ID ASSIGN data_type COLON type_spec
+    4                    | . LET case_comma COLON type_spec
+    5                    | . LET case_comma ASSIGN expressions COLON type_spec
+    6                    | . LET decl_array
+    7                    | . func_decl
+   10 func_decl: . CONST ID ASSIGN L_PAR func_param R_PAR COLON type_spec ARROW L_BRAC func_body R_BRAC
+   11 func_call: . ID L_PAR func_args R_PAR
+   23 body: statement_list .  [R_BRAC]
+   25 statement_list: statement_list . statement SEMICOLON
+   26 statement: . func_call
+   27          | . ID ASSIGN expressions
+   28          | . decl_list_statement
+   29          | . oth_statement
+   30 oth_statement: . if_case
+   31              | . while_case
+   32              | . ret
+   65 ret: . RET
+   66    | . RET expressions
+   67 if_case: . IF expressions THEN statement_list FI
+   68        | . IF expressions THEN statement_list ELSE statement_list FI
+   69 while_case: . WHILE expressions LOOP statement_list POOL
+
+    IF     shift, and go to state 120
+    WHILE  shift, and go to state 121
+    ID     shift, and go to state 122
+    CONST  shift, and go to state 1
+    LET    shift, and go to state 2
+    RET    shift, and go to state 123
+
+    $default  reduce using rule 23 (body)
+
+    decl_list_statement  go to state 124
+    func_decl            go to state 6
+    func_call            go to state 125
+    statement            go to state 140
+    oth_statement        go to state 129
+    ret                  go to state 130
+    if_case              go to state 131
+    while_case           go to state 132
+
+
+State 135
+
+   48 expressions: expressions . MOD expressions
+   49            | expressions . DIV expressions
+   50            | expressions . OP_MUL expressions
+   51            | expressions . OP_PLUS expressions
+   52            | expressions . OP_MIN expressions
+   53            | expressions . LST expressions
+   54            | expressions . DIFF expressions
+   55            | expressions . EQ expressions
+   56            | expressions . '<' expressions
+   57            | expressions . OP_OR expressions
+   58            | expressions . AND expressions
+   67 if_case: IF expressions . THEN statement_list FI
+   68        | IF expressions . THEN statement_list ELSE statement_list FI
+
+    AND      shift, and go to state 62
+    OP_OR    shift, and go to state 63
+    LST      shift, and go to state 64
+    EQ       shift, and go to state 65
+    OP_PLUS  shift, and go to state 66
+    OP_MIN   shift, and go to state 67
+    DIV      shift, and go to state 68
+    OP_MUL   shift, and go to state 69
+    MOD      shift, and go to state 71
+    DIFF     shift, and go to state 72
+    THEN     shift, and go to state 143
+    '<'      shift, and go to state 73
+
+
+State 136
+
+   48 expressions: expressions . MOD expressions
+   49            | expressions . DIV expressions
+   50            | expressions . OP_MUL expressions
+   51            | expressions . OP_PLUS expressions
+   52            | expressions . OP_MIN expressions
+   53            | expressions . LST expressions
+   54            | expressions . DIFF expressions
+   55            | expressions . EQ expressions
+   56            | expressions . '<' expressions
+   57            | expressions . OP_OR expressions
+   58            | expressions . AND expressions
+   69 while_case: WHILE expressions . LOOP statement_list POOL
+
+    AND      shift, and go to state 62
+    OP_OR    shift, and go to state 63
+    LOOP     shift, and go to state 144
+    LST      shift, and go to state 64
+    EQ       shift, and go to state 65
+    OP_PLUS  shift, and go to state 66
+    OP_MIN   shift, and go to state 67
+    DIV      shift, and go to state 68
+    OP_MUL   shift, and go to state 69
+    MOD      shift, and go to state 71
+    DIFF     shift, and go to state 72
+    '<'      shift, and go to state 73
+
+
+State 137
+
+   11 func_call: . ID L_PAR func_args R_PAR
+   27 statement: ID ASSIGN . expressions
+   33 data_type: . POSINT
+   34          | . RL
+   35          | . ID
+   36 type_spec: . INT
+   37          | . REAL
+   38          | . BOOL
+   39          | . STRING
+   44 expressions: . exp_type
+   45            | . NOT expressions
+   46            | . OP_PLUS expressions
+   47            | . OP_MIN expressions
+   48            | . expressions MOD expressions
+   49            | . expressions DIV expressions
+   50            | . expressions OP_MUL expressions
+   51            | . expressions OP_PLUS expressions
+   52            | . expressions OP_MIN expressions
+   53            | . expressions LST expressions
+   54            | . expressions DIFF expressions
+   55            | . expressions EQ expressions
+   56            | . expressions '<' expressions
+   57            | . expressions OP_OR expressions
+   58            | . expressions AND expressions
+   59            | . L_PAR expressions R_PAR
+   60 exp_type: . data_type
+   61         | . type_spec
+   62         | . TRUE
+   63         | . FALSE
+   64         | . func_call
+
+    STRING   shift, and go to state 29
+    NOT      shift, and go to state 36
+    TRUE     shift, and go to state 37
+    FALSE    shift, and go to state 38
+    BOOL     shift, and go to state 30
+    RL       shift, and go to state 24
+    POSINT   shift, and go to state 25
+    ID       shift, and go to state 39
+    OP_PLUS  shift, and go to state 40
+    OP_MIN   shift, and go to state 41
+    L_PAR    shift, and go to state 42
+    INT      shift, and go to state 31
+    REAL     shift, and go to state 32
+
+    func_call    go to state 43
+    data_type    go to state 44
+    type_spec    go to state 45
+    expressions  go to state 145
+    exp_type     go to state 47
+
+
+State 138
+
+   48 expressions: expressions . MOD expressions
+   49            | expressions . DIV expressions
+   50            | expressions . OP_MUL expressions
+   51            | expressions . OP_PLUS expressions
+   52            | expressions . OP_MIN expressions
+   53            | expressions . LST expressions
+   54            | expressions . DIFF expressions
+   55            | expressions . EQ expressions
+   56            | expressions . '<' expressions
+   57            | expressions . OP_OR expressions
+   58            | expressions . AND expressions
+   66 ret: RET expressions .  [SEMICOLON]
+
+    AND      shift, and go to state 62
+    OP_OR    shift, and go to state 63
+    LST      shift, and go to state 64
+    EQ       shift, and go to state 65
+    OP_PLUS  shift, and go to state 66
+    OP_MIN   shift, and go to state 67
+    DIV      shift, and go to state 68
+    OP_MUL   shift, and go to state 69
+    MOD      shift, and go to state 71
+    DIFF     shift, and go to state 72
+    '<'      shift, and go to state 73
+
+    $default  reduce using rule 66 (ret)
+
+
+State 139
+
+   10 func_decl: CONST ID ASSIGN L_PAR func_param R_PAR COLON type_spec ARROW L_BRAC func_body R_BRAC .
+
+    $default  reduce using rule 10 (func_decl)
+
+
+State 140
+
+   25 statement_list: statement_list statement . SEMICOLON
+
+    SEMICOLON  shift, and go to state 146
+
+
+State 141
+
+   24 statement_list: statement SEMICOLON .
+
+    $default  reduce using rule 24 (statement_list)
+
+
+State 142
+
+    1 program: decl_list CONST START ASSIGN L_PAR R_PAR COLON type_spec ARROW L_BRAC body R_BRAC .
+
+    $default  reduce using rule 1 (program)
+
+
+State 143
+
+    2 decl_list_statement: . CONST case_comma COLON type_spec
+    3                    | . CONST ID ASSIGN data_type COLON type_spec
+    4                    | . LET case_comma COLON type_spec
+    5                    | . LET case_comma ASSIGN expressions COLON type_spec
+    6                    | . LET decl_array
+    7                    | . func_decl
+   10 func_decl: . CONST ID ASSIGN L_PAR func_param R_PAR COLON type_spec ARROW L_BRAC func_body R_BRAC
+   11 func_call: . ID L_PAR func_args R_PAR
+   24 statement_list: . statement SEMICOLON
+   25               | . statement_list statement SEMICOLON
+   26 statement: . func_call
+   27          | . ID ASSIGN expressions
+   28          | . decl_list_statement
+   29          | . oth_statement
+   30 oth_statement: . if_case
+   31              | . while_case
+   32              | . ret
+   65 ret: . RET
+   66    | . RET expressions
+   67 if_case: . IF expressions THEN statement_list FI
+   67        | IF expressions THEN . statement_list FI
+   68        | . IF expressions THEN statement_list ELSE statement_list FI
+   68        | IF expressions THEN . statement_list ELSE statement_list FI
+   69 while_case: . WHILE expressions LOOP statement_list POOL
+
+    IF     shift, and go to state 120
+    WHILE  shift, and go to state 121
+    ID     shift, and go to state 122
+    CONST  shift, and go to state 1
+    LET    shift, and go to state 2
+    RET    shift, and go to state 123
+
+    decl_list_statement  go to state 124
+    func_decl            go to state 6
+    func_call            go to state 125
+    statement_list       go to state 147
+    statement            go to state 128
+    oth_statement        go to state 129
+    ret                  go to state 130
+    if_case              go to state 131
+    while_case           go to state 132
+
+
+State 144
+
+    2 decl_list_statement: . CONST case_comma COLON type_spec
+    3                    | . CONST ID ASSIGN data_type COLON type_spec
+    4                    | . LET case_comma COLON type_spec
+    5                    | . LET case_comma ASSIGN expressions COLON type_spec
+    6                    | . LET decl_array
+    7                    | . func_decl
+   10 func_decl: . CONST ID ASSIGN L_PAR func_param R_PAR COLON type_spec ARROW L_BRAC func_body R_BRAC
+   11 func_call: . ID L_PAR func_args R_PAR
+   24 statement_list: . statement SEMICOLON
+   25               | . statement_list statement SEMICOLON
+   26 statement: . func_call
+   27          | . ID ASSIGN expressions
+   28          | . decl_list_statement
+   29          | . oth_statement
+   30 oth_statement: . if_case
+   31              | . while_case
+   32              | . ret
+   65 ret: . RET
+   66    | . RET expressions
+   67 if_case: . IF expressions THEN statement_list FI
+   68        | . IF expressions THEN statement_list ELSE statement_list FI
+   69 while_case: . WHILE expressions LOOP statement_list POOL
+   69           | WHILE expressions LOOP . statement_list POOL
+
+    IF     shift, and go to state 120
+    WHILE  shift, and go to state 121
+    ID     shift, and go to state 122
+    CONST  shift, and go to state 1
+    LET    shift, and go to state 2
+    RET    shift, and go to state 123
+
+    decl_list_statement  go to state 124
+    func_decl            go to state 6
+    func_call            go to state 125
+    statement_list       go to state 148
+    statement            go to state 128
+    oth_statement        go to state 129
+    ret                  go to state 130
+    if_case              go to state 131
+    while_case           go to state 132
+
+
+State 145
+
+   27 statement: ID ASSIGN expressions .  [SEMICOLON]
+   48 expressions: expressions . MOD expressions
+   49            | expressions . DIV expressions
+   50            | expressions . OP_MUL expressions
+   51            | expressions . OP_PLUS expressions
+   52            | expressions . OP_MIN expressions
+   53            | expressions . LST expressions
+   54            | expressions . DIFF expressions
+   55            | expressions . EQ expressions
+   56            | expressions . '<' expressions
+   57            | expressions . OP_OR expressions
+   58            | expressions . AND expressions
+
+    AND      shift, and go to state 62
+    OP_OR    shift, and go to state 63
+    LST      shift, and go to state 64
+    EQ       shift, and go to state 65
+    OP_PLUS  shift, and go to state 66
+    OP_MIN   shift, and go to state 67
+    DIV      shift, and go to state 68
+    OP_MUL   shift, and go to state 69
+    MOD      shift, and go to state 71
+    DIFF     shift, and go to state 72
+    '<'      shift, and go to state 73
+
+    $default  reduce using rule 27 (statement)
+
+
+State 146
+
+   25 statement_list: statement_list statement SEMICOLON .
+
+    $default  reduce using rule 25 (statement_list)
+
+
+State 147
+
+    2 decl_list_statement: . CONST case_comma COLON type_spec
+    3                    | . CONST ID ASSIGN data_type COLON type_spec
+    4                    | . LET case_comma COLON type_spec
+    5                    | . LET case_comma ASSIGN expressions COLON type_spec
+    6                    | . LET decl_array
+    7                    | . func_decl
+   10 func_decl: . CONST ID ASSIGN L_PAR func_param R_PAR COLON type_spec ARROW L_BRAC func_body R_BRAC
+   11 func_call: . ID L_PAR func_args R_PAR
+   25 statement_list: statement_list . statement SEMICOLON
+   26 statement: . func_call
+   27          | . ID ASSIGN expressions
+   28          | . decl_list_statement
+   29          | . oth_statement
+   30 oth_statement: . if_case
+   31              | . while_case
+   32              | . ret
+   65 ret: . RET
+   66    | . RET expressions
+   67 if_case: . IF expressions THEN statement_list FI
+   67        | IF expressions THEN statement_list . FI
+   68        | . IF expressions THEN statement_list ELSE statement_list FI
+   68        | IF expressions THEN statement_list . ELSE statement_list FI
+   69 while_case: . WHILE expressions LOOP statement_list POOL
+
+    IF     shift, and go to state 120
+    FI     shift, and go to state 149
+    ELSE   shift, and go to state 150
+    WHILE  shift, and go to state 121
+    ID     shift, and go to state 122
+    CONST  shift, and go to state 1
+    LET    shift, and go to state 2
+    RET    shift, and go to state 123
+
+    decl_list_statement  go to state 124
+    func_decl            go to state 6
+    func_call            go to state 125
+    statement            go to state 140
+    oth_statement        go to state 129
+    ret                  go to state 130
+    if_case              go to state 131
+    while_case           go to state 132
+
+
+State 148
+
+    2 decl_list_statement: . CONST case_comma COLON type_spec
+    3                    | . CONST ID ASSIGN data_type COLON type_spec
+    4                    | . LET case_comma COLON type_spec
+    5                    | . LET case_comma ASSIGN expressions COLON type_spec
+    6                    | . LET decl_array
+    7                    | . func_decl
+   10 func_decl: . CONST ID ASSIGN L_PAR func_param R_PAR COLON type_spec ARROW L_BRAC func_body R_BRAC
+   11 func_call: . ID L_PAR func_args R_PAR
+   25 statement_list: statement_list . statement SEMICOLON
+   26 statement: . func_call
+   27          | . ID ASSIGN expressions
+   28          | . decl_list_statement
+   29          | . oth_statement
+   30 oth_statement: . if_case
+   31              | . while_case
+   32              | . ret
+   65 ret: . RET
+   66    | . RET expressions
+   67 if_case: . IF expressions THEN statement_list FI
+   68        | . IF expressions THEN statement_list ELSE statement_list FI
+   69 while_case: . WHILE expressions LOOP statement_list POOL
+   69           | WHILE expressions LOOP statement_list . POOL
+
+    IF     shift, and go to state 120
+    WHILE  shift, and go to state 121
+    ID     shift, and go to state 122
+    POOL   shift, and go to state 151
+    CONST  shift, and go to state 1
+    LET    shift, and go to state 2
+    RET    shift, and go to state 123
+
+    decl_list_statement  go to state 124
+    func_decl            go to state 6
+    func_call            go to state 125
+    statement            go to state 140
+    oth_statement        go to state 129
+    ret                  go to state 130
+    if_case              go to state 131
+    while_case           go to state 132
+
+
+State 149
+
+   67 if_case: IF expressions THEN statement_list FI .
+
+    $default  reduce using rule 67 (if_case)
+
+
+State 150
+
+    2 decl_list_statement: . CONST case_comma COLON type_spec
+    3                    | . CONST ID ASSIGN data_type COLON type_spec
+    4                    | . LET case_comma COLON type_spec
+    5                    | . LET case_comma ASSIGN expressions COLON type_spec
+    6                    | . LET decl_array
+    7                    | . func_decl
+   10 func_decl: . CONST ID ASSIGN L_PAR func_param R_PAR COLON type_spec ARROW L_BRAC func_body R_BRAC
+   11 func_call: . ID L_PAR func_args R_PAR
+   24 statement_list: . statement SEMICOLON
+   25               | . statement_list statement SEMICOLON
+   26 statement: . func_call
+   27          | . ID ASSIGN expressions
+   28          | . decl_list_statement
+   29          | . oth_statement
+   30 oth_statement: . if_case
+   31              | . while_case
+   32              | . ret
+   65 ret: . RET
+   66    | . RET expressions
+   67 if_case: . IF expressions THEN statement_list FI
+   68        | . IF expressions THEN statement_list ELSE statement_list FI
+   68        | IF expressions THEN statement_list ELSE . statement_list FI
+   69 while_case: . WHILE expressions LOOP statement_list POOL
+
+    IF     shift, and go to state 120
+    WHILE  shift, and go to state 121
+    ID     shift, and go to state 122
+    CONST  shift, and go to state 1
+    LET    shift, and go to state 2
+    RET    shift, and go to state 123
+
+    decl_list_statement  go to state 124
+    func_decl            go to state 6
+    func_call            go to state 125
+    statement_list       go to state 152
+    statement            go to state 128
+    oth_statement        go to state 129
+    ret                  go to state 130
+    if_case              go to state 131
+    while_case           go to state 132
+
+
+State 151
+
+   69 while_case: WHILE expressions LOOP statement_list POOL .
+
+    $default  reduce using rule 69 (while_case)
+
+
+State 152
+
+    2 decl_list_statement: . CONST case_comma COLON type_spec
+    3                    | . CONST ID ASSIGN data_type COLON type_spec
+    4                    | . LET case_comma COLON type_spec
+    5                    | . LET case_comma ASSIGN expressions COLON type_spec
+    6                    | . LET decl_array
+    7                    | . func_decl
+   10 func_decl: . CONST ID ASSIGN L_PAR func_param R_PAR COLON type_spec ARROW L_BRAC func_body R_BRAC
+   11 func_call: . ID L_PAR func_args R_PAR
+   25 statement_list: statement_list . statement SEMICOLON
+   26 statement: . func_call
+   27          | . ID ASSIGN expressions
+   28          | . decl_list_statement
+   29          | . oth_statement
+   30 oth_statement: . if_case
+   31              | . while_case
+   32              | . ret
+   65 ret: . RET
+   66    | . RET expressions
+   67 if_case: . IF expressions THEN statement_list FI
+   68        | . IF expressions THEN statement_list ELSE statement_list FI
+   68        | IF expressions THEN statement_list ELSE statement_list . FI
+   69 while_case: . WHILE expressions LOOP statement_list POOL
+
+    IF     shift, and go to state 120
+    FI     shift, and go to state 153
+    WHILE  shift, and go to state 121
+    ID     shift, and go to state 122
+    CONST  shift, and go to state 1
+    LET    shift, and go to state 2
+    RET    shift, and go to state 123
+
+    decl_list_statement  go to state 124
+    func_decl            go to state 6
+    func_call            go to state 125
+    statement            go to state 140
+    oth_statement        go to state 129
+    ret                  go to state 130
+    if_case              go to state 131
+    while_case           go to state 132
+
+
+State 153
+
+   68 if_case: IF expressions THEN statement_list ELSE statement_list FI .
+
+    $default  reduce using rule 68 (if_case)
